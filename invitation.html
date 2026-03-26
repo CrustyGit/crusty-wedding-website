@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>Ale &amp; Kris — 28 August 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold:      #C9A84C;
+      --dark:      #0e0604;
+      --mid:       #3A2010;
+      --cream:     #FAF6EF;
+      --parchment: #F2EBD9;
+      --white:     #FFFFFF;
+      --wine:      #5B1A2A;
+      --text:      #2D1E14;
+      --muted:     #8A7060;
+      --shadow:    0 4px 32px rgba(14,6,4,0.15);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    #hero-bg {
+      position: absolute; inset: 0;
+      background: url('images/hero.jpg') center top/cover no-repeat;
+      background-color: #0e0604;
+    }
+    #hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 60%, rgba(14,6,4,0.7) 100%);
+    }
+    #hero-content {
+      position: absolute;
+      bottom: 3.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      padding: 0 2rem;
+      width: 100%;
+      max-width: 520px;
+      text-align: center;
+    }
+
+    /* Countdown */
+    #countdown {
+      display: flex; gap: 1.5rem; justify-content: center;
+      margin-bottom: 2.5rem;
+    }
+    .cd-unit { text-align: center; min-width: 52px; }
+    .cd-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem; font-weight: 500;
+      color: var(--white); line-height: 1;
+      display: block;
+    }
+    .cd-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.6rem; font-weight: 300;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-top: 4px; display: block;
+    }
+    .cd-sep {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; color: var(--gold);
+      opacity: 0.5; align-self: flex-start; margin-top: 4px;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      padding: 0.75rem 2.5rem;
+      background: var(--wine);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem; font-weight: 400;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(201,168,76,0.5);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .hero-cta:hover { background: #7a2038; border-color: var(--gold); }
+
+    /* ── SCROLL ARROW ── */
+    .scroll-arrow {
+      position: absolute; bottom: 2rem; left: 50%;
+      transform: translateX(-50%);
+      z-index: 2; opacity: 0.5;
+      animation: bounce 2s infinite;
+    }
+    .scroll-arrow svg { width: 24px; height: 24px; stroke: #fff; fill: none; stroke-width: 1.5; }
+    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 4.5rem 1.5rem;
+      max-width: 640px; margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem; font-weight: 400;
+      letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.6rem;
+      display: block;
+    }
+    .section-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(2.2rem, 7vw, 3rem);
+      color: var(--dark);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+    .section-divider {
+      width: 40px; height: 1px;
+      background: var(--gold); opacity: 0.6;
+      margin-bottom: 2rem;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--parchment);
+      border-radius: 3px;
+      box-shadow: var(--shadow);
+      padding: 2rem 1.8rem;
+      margin-bottom: 1.2rem;
+    }
+
+    /* ── THE DAY — timeline ── */
+    .timeline { list-style: none; }
+    .timeline li {
+      display: flex; align-items: baseline; gap: 1.2rem;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+    .timeline li:last-child { border-bottom: none; }
+    .tl-time {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem; font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--gold); min-width: 58px;
+      flex-shrink: 0;
+    }
+    .tl-event {
+      font-size: 1.05rem; font-weight: 400;
+      color: var(--text);
+    }
+    .tl-note {
+      font-size: 0.85rem; font-style: italic;
+      color: var(--muted); margin-top: 2px;
+      display: block;
+    }
+
+    /* ── GETTING THERE ── */
+    .transport-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+    .transport-card {
+      background: var(--parchment);
+      border-radius: 3px;
+      box-shadow: var(--shadow);
+      padding: 1.5rem 1.2rem;
+      text-align: center;
+    }
+    .transport-icon {
+      font-size: 1.6rem; margin-bottom: 0.6rem; display: block;
+    }
+    .transport-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text); margin-bottom: 0.4rem;
+    }
+    .transport-detail {
+      font-size: 0.9rem; color: var(--muted);
+      font-style: italic; line-height: 1.4;
+    }
+    .address-card {
+      background: var(--parchment);
+      border-radius: 3px;
+      box-shadow: var(--shadow);
+      padding: 1.5rem 1.8rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .address-card .pin { font-size: 1.3rem; flex-shrink: 0; }
+    .address-card p { font-size: 0.95rem; color: var(--muted); line-height: 1.6; }
+    .address-card a {
+      color: var(--gold); text-decoration: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem; letter-spacing: 0.15em;
+      text-transform: uppercase; display: block;
+      margin-top: 0.5rem;
+    }
+
+    /* ── THE WEEKEND ── */
+    .weekend-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .weekend-card {
+      background: var(--parchment);
+      border-radius: 3px;
+      box-shadow: var(--shadow);
+      padding: 1.6rem 1.4rem;
+      border-top: 2px solid var(--gold);
+    }
+    .weekend-day {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.6rem; font-weight: 500;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.5rem;
+    }
+    .weekend-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.5rem; color: var(--text);
+      margin-bottom: 0.5rem; line-height: 1.1;
+    }
+    .weekend-desc {
+      font-size: 0.9rem; color: var(--muted);
+      font-style: italic; line-height: 1.5;
+    }
+
+    /* ── RSVP SECTION ── */
+    #rsvp-section { text-align: center; padding-bottom: 5rem; }
+    .rsvp-block {
+      background: var(--dark);
+      border-radius: 3px;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    .rsvp-block .section-title { color: var(--white); }
+    .rsvp-block p {
+      font-size: 1rem; font-style: italic;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 2rem; line-height: 1.7;
+    }
+    .rsvp-btn {
+      display: inline-block;
+      padding: 0.85rem 3rem;
+      background: var(--wine);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem; font-weight: 400;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(201,168,76,0.5);
+      transition: background 0.2s;
+    }
+    .rsvp-btn:hover { background: #7a2038; }
+    .rsvp-deadline {
+      margin-top: 1.2rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem; font-weight: 300;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 2.5rem 1.5rem;
+      border-top: 1px solid rgba(201,168,76,0.15);
+    }
+    footer .monogram {
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.8rem; color: var(--gold); opacity: 0.6;
+    }
+    footer p {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.6rem; font-weight: 300;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); margin-top: 0.5rem;
+    }
+
+    /* ── BOOKLET LINK ── */
+    .booklet-link-bar {
+      background: rgba(14,6,4,0.04);
+      border-top: 1px solid rgba(201,168,76,0.25);
+      border-bottom: 1px solid rgba(201,168,76,0.25);
+      text-align: center; padding: 1.2rem 1.5rem;
+    }
+    .booklet-link-bar a {
+      display: inline-block;
+      padding: 0.75rem 2.5rem;
+      background: var(--wine);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem; font-weight: 400;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(201,168,76,0.5);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .booklet-link-bar a:hover { background: #7a2038; border-color: var(--gold); }
+
+    /* ── SECTION FADE IN ── */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: none; }
+
+    /* ── FAQ ── */
+    .faq-list { display: flex; flex-direction: column; gap: 0.5rem; }
+    .faq-item { background: var(--parchment); border-radius: 3px; box-shadow: var(--shadow); overflow: hidden; }
+    .faq-q {
+      width: 100%; text-align: left; background: none; border: none;
+      padding: 1.1rem 1.5rem; cursor: pointer;
+      font-family: 'Cormorant Garamond', serif; font-size: 1.05rem;
+      color: var(--text); display: flex; justify-content: space-between; align-items: center;
+      gap: 1rem;
+    }
+    .faq-q:hover { background: rgba(201,168,76,0.10); }
+    .faq-arrow { font-size: 1.3rem; color: var(--gold); flex-shrink: 0; transition: transform 0.25s; line-height: 1; }
+    .faq-item.open .faq-arrow { transform: rotate(45deg); }
+    .faq-a {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 1.5rem;
+    }
+    .faq-item.open .faq-a { max-height: 200px; padding: 0 1.5rem 1.1rem; }
+    .faq-a p { font-size: 0.95rem; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+    /* ── MOBILE TWEAKS ── */
+    @media (max-width: 480px) {
+      .transport-grid { grid-template-columns: 1fr; }
+      .weekend-grid   { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── HERO ── -->
+  <div id="hero">
+    <div id="hero-bg"></div>
+    <div id="hero-overlay"></div>
+    <div id="hero-content">
+      <div id="countdown">
+        <div class="cd-unit"><span class="cd-num" id="cd-days">—</span><span class="cd-label">Days</span></div>
+        <span class="cd-sep">·</span>
+        <div class="cd-unit"><span class="cd-num" id="cd-hours">—</span><span class="cd-label">Hours</span></div>
+        <span class="cd-sep">·</span>
+        <div class="cd-unit"><span class="cd-num" id="cd-mins">—</span><span class="cd-label">Minutes</span></div>
+        <span class="cd-sep">·</span>
+        <div class="cd-unit"><span class="cd-num" id="cd-secs">—</span><span class="cd-label">Seconds</span></div>
+      </div>
+      <a href="#rsvp-section" class="hero-cta">RSVP</a>
+    </div>
+    <div class="scroll-arrow"><svg viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></div>
+  </div>
+
+  <!-- ── BOOKLET LINK ── -->
+  <div class="booklet-link-bar">
+    <a href="book-images-v3-page-fold.html">📖 &nbsp; View the full digital booklet →</a>
+  </div>
+
+  <!-- ── THE DAY ── -->
+  <section class="fade-in">
+    <span class="section-label">28 August 2026</span>
+    <h2 class="section-title">The Day</h2>
+    <div class="section-divider"></div>
+    <div class="card">
+      <ul class="timeline">
+        <li>
+          <span class="tl-time">18:15</span>
+          <div><span class="tl-event">Welcome &amp; Arrival</span><span class="tl-note">Please arrive on time — the ceremony starts promptly</span></div>
+        </li>
+        <li>
+          <span class="tl-time">18:30</span>
+          <div><span class="tl-event">Ceremony</span><span class="tl-note">In the gardens of the Castell</span></div>
+        </li>
+        <li>
+          <span class="tl-time">Evening</span>
+          <div><span class="tl-event">Cocktail Hour</span><span class="tl-note">Signature drinks &amp; live music</span></div>
+        </li>
+        <li>
+          <span class="tl-time">Night</span>
+          <div><span class="tl-event">Dinner Under the Stars</span></div>
+        </li>
+        <li>
+          <span class="tl-time">Late</span>
+          <div><span class="tl-event">Dancing &amp; Party</span><span class="tl-note">Until 3:30 AM</span></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── GETTING THERE ── -->
+  <section class="fade-in">
+    <span class="section-label">Access &amp; Arrival</span>
+    <h2 class="section-title">Getting There</h2>
+    <div class="section-divider"></div>
+
+    <div class="transport-grid">
+      <div class="transport-card">
+        <span class="transport-icon">🚌</span>
+        <p class="transport-title">Private Bus</p>
+        <p class="transport-detail">From Barcelona city centre — details &amp; pickup point confirmed on RSVP</p>
+      </div>
+      <div class="transport-card">
+        <span class="transport-icon">🚗</span>
+        <p class="transport-title">Taxi / Cabify</p>
+        <p class="transport-detail">~€30, ~30 min from central Barcelona. Parking on-site.</p>
+      </div>
+    </div>
+
+    <div class="address-card">
+      <span class="pin">📍</span>
+      <div>
+        <p>Castell de Sant Marçal<br>Cerdanyola del Vallès, Barcelona</p>
+        <a href="https://maps.google.com/?q=Castell+de+Sant+Marcal+Cerdanyola" target="_blank" rel="noopener">Open in Maps →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── THE WEEKEND ── -->
+  <section class="fade-in">
+    <span class="section-label">The Full Celebration</span>
+    <h2 class="section-title">The Weekend</h2>
+    <div class="section-divider"></div>
+    <div class="weekend-grid">
+      <div class="weekend-card">
+        <p class="weekend-day">Thursday · 27 Aug</p>
+        <h3 class="weekend-title">Welcome Drinks</h3>
+        <p class="weekend-desc">An intimate pre-wedding gathering for those arriving early. Details to follow.</p>
+      </div>
+      <div class="weekend-card" style="border-top-color:#5B1A2A;">
+        <p class="weekend-day" style="color:#5B1A2A;">Friday · 28 Aug</p>
+        <h3 class="weekend-title">The Wedding</h3>
+        <p class="weekend-desc">The big day. Ceremony at 18:30, followed by dinner &amp; dancing until 3:30 AM.</p>
+      </div>
+      <div class="weekend-card">
+        <p class="weekend-day">Saturday · 29 Aug</p>
+        <h3 class="weekend-title">Pool Party</h3>
+        <p class="weekend-desc">A relaxed afternoon by the pool to celebrate the day after. More info soon.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SEATING & MENU ── -->
+  <section class="fade-in">
+    <span class="section-label">Dinner</span>
+    <h2 class="section-title">Seating &amp; Menu</h2>
+    <div class="section-divider"></div>
+    <div class="card" style="text-align:center;">
+      <p style="font-style:italic;font-size:1rem;color:var(--muted);line-height:1.8;">Your assigned table and full dinner menu will be available here once confirmed.</p>
+    </div>
+  </section>
+
+  <!-- ── WEDDING GIFT ── -->
+  <section class="fade-in">
+    <span class="section-label">Wedding Gift</span>
+    <h2 class="section-title">A Gift from the Heart</h2>
+    <div class="section-divider"></div>
+    <div class="card" style="text-align:center;">
+      <p style="font-size:1.05rem;line-height:1.9;color:var(--text);margin-bottom:1.5rem;">Your presence at our wedding is truly the greatest gift we could ask for.<br><br>However, if you wish to honour us with a gift, a contribution towards our honeymoon would mean the world to us as we begin this new chapter together.</p>
+      <div style="background:rgba(14,6,4,0.05);border-radius:3px;padding:1.2rem 1.5rem;display:inline-block;border:1px solid rgba(201,168,76,0.35);">
+        <p style="font-family:'Montserrat',sans-serif;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem;">Bank Transfer</p>
+        <p style="font-family:'Montserrat',sans-serif;font-size:0.95rem;font-weight:500;color:var(--text);letter-spacing:0.05em;">ES57 0081 0025 2100 0416 4925</p>
+      </div>
+      <p style="margin-top:1.2rem;font-style:italic;font-size:0.9rem;color:var(--muted);">Thank you for celebrating with us and for being part of our story.</p>
+    </div>
+  </section>
+
+  <!-- ── OUR STORY ── -->
+  <section class="fade-in">
+    <span class="section-label">Our Story</span>
+    <h2 class="section-title">Once Upon a Time</h2>
+    <div class="section-divider"></div>
+    <div class="card" style="font-style:italic;font-size:1rem;line-height:1.9;color:var(--text);padding:2.2rem 2rem;">
+      <p style="margin-bottom:1.2rem;">Once upon a time, a little girl named Alexandra was born in Lisbon — though she would forever insist she is half Brazilian, despite carrying a surname that is unmistakably German. Perhaps fate was already hinting at the curious mixture of worlds that lay ahead. For six years later, in the German city of Bielefeld — a place most famous for not being famous at all — a boy named Kristoffer entered the world.</p>
+      <p style="margin-bottom:1.2rem;">For many years, their paths did not cross. After spending time in Portugal, Italy, Brazil and New York, Ale eventually built her life beneath the sunny skies of Barcelona, while Kris went all the way to Mexico only to later settle in the far rainier streets of London. One might say they are just as different as the cities they call home. And yet, as everyone knows, opposites have a most curious habit of attracting one another.</p>
+      <p style="margin-bottom:1.2rem;">And so it was that, one summer evening in Ibiza, destiny quietly intervened. They met at a dinner with mutual friends — a dinner Ale was very eager to attend and Kris was not eager to attend at all. As it happens, friends, Covid, Neymar and Anitta all played their own peculiar roles in the chain of unlikely events that brought them to the same table.</p>
+      <p style="margin-bottom:1.2rem;">On the night of the wedding celebration, just after midnight, it will be exactly six years since that evening in Ibiza — August 29th, 2020 — when their story truly began.</p>
+      <p style="margin-bottom:1.2rem;">Six years of a long-distance relationship that was not always easy, yet somehow brought them closer with each passing day. Six years of growing together, learning from one another, and slowly becoming not only partners, but the very best of friends.</p>
+      <p style="margin-bottom:1.2rem;">And the rest, dear reader, is the story that continues.</p>
+      <p style="text-align:center;font-family:'Great Vibes',cursive;font-size:1.4rem;color:var(--gold);margin-bottom:0;">— Ale &amp; Kris</p>
+    </div>
+  </section>
+
+  <!-- ── FAQ ── -->
+  <section class="fade-in">
+    <span class="section-label">Practical Details</span>
+    <h2 class="section-title">FAQs</h2>
+    <div class="section-divider"></div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q">Where is the wedding? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Castell de Sant Marçal, Cerdanyola del Vallès, Barcelona.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Can I bring a companion? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Each invitation is addressed to the specific guest(s) invited. We kindly ask that only those named on the invitation attend.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Are children allowed? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>This will be an adults-only celebration. As much as we adore your little ones, we would love for you to fully relax and enjoy the day without any responsibilities.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">How do I get there? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>A private shuttle bus will be organised from Barcelona city centre. Collection points and timings will be confirmed closer to the date — keep an eye on the website. Alternatively, Cabify, Uber or a taxi takes approximately 30 minutes and costs around €30.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Is parking available? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Yes, on-site parking is available. If you are planning to drive, please let us know when you RSVP.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">What is the dress code? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Chic wedding attire — timeless elegance for a castle soirée. All colours and prints are welcome.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Can I take photos? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Please refrain from taking photos during the ceremony vows — we have a professional photographer and videographer capturing every moment, and we'd love for you to be fully present with us. Outside of the vows, feel free to take as many photos as you wish!</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">What if I can't attend? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Please RSVP "no" as soon as possible. While we would love to celebrate with you, we completely understand that circumstances can change.</p></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── RSVP ── -->
+  <section id="rsvp-section" class="fade-in">
+    <div class="rsvp-block">
+      <span class="section-label" style="color:rgba(201,168,76,0.7)">Kindly confirm by</span>
+      <h2 class="section-title">RSVP</h2>
+      <p>Please let us know if you'll be joining us —<br>and whether you'd like a seat on the bus.</p>
+      <a href="rsvp.html" class="rsvp-btn">Confirm Attendance</a>
+      <p class="rsvp-deadline">Deadline: end of May 2026</p>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="monogram">K &amp; A</div>
+    <p>28 · August · 2026 · Castell de Sant Marçal</p>
+  </footer>
+
+  <script>
+    // ── COUNTDOWN ──
+    const wedding = new Date('2026-08-28T18:15:00+02:00');
+    function tick() {
+      const now = new Date();
+      const diff = wedding - now;
+      if (diff <= 0) {
+        document.getElementById('countdown').innerHTML = '<span style="font-family:Great Vibes,cursive;font-size:1.8rem;color:#fff">Today is the day! 🎉</span>';
+        return;
+      }
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      document.getElementById('cd-days').textContent  = d;
+      document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+      document.getElementById('cd-mins').textContent  = String(m).padStart(2,'0');
+      document.getElementById('cd-secs').textContent  = String(s).padStart(2,'0');
+    }
+    tick(); setInterval(tick, 1000);
+
+    // ── FAQ ACCORDION ──
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+
+    // ── FADE IN ON SCROLL ──
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>

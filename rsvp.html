@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RSVP — Ale &amp; Kris · 28th August 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --burgundy: #6B2737;
+      --burgundy-light: #8B3A4A;
+      --rose: #C4848E;
+      --rose-light: #E8C4C8;
+      --cream: #FAF6F0;
+      --cream-dark: #F0E8DC;
+      --gold: #B8955A;
+      --gold-light: #D4B078;
+      --text: #2C1810;
+      --text-light: #5C3D2E;
+      --border: #D4B078;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--cream);
+      color: var(--text);
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.8;
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      text-align: center;
+    }
+
+    .header-back {
+      position: absolute;
+      left: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .header-back:hover { color: var(--burgundy); }
+
+    header { position: relative; }
+
+    .header-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--burgundy);
+    }
+
+    /* HERO */
+    .rsvp-hero {
+      text-align: center;
+      padding: 4rem 2rem 3rem;
+      background: radial-gradient(ellipse at center, rgba(107,39,55,0.04) 0%, transparent 70%), var(--cream);
+    }
+
+    .rsvp-hero .ornament {
+      font-size: 1.2rem;
+      color: var(--gold);
+      letter-spacing: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .rsvp-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 400;
+      color: var(--burgundy);
+      line-height: 1.2;
+      margin-bottom: 0.8rem;
+    }
+
+    .rsvp-hero .subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(0.85rem, 2vw, 1rem);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+
+    .hero-divider {
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      margin: 1.5rem auto;
+    }
+
+    /* FORM CONTAINER */
+    .form-container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 5rem;
+    }
+
+    .form-intro {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      font-style: italic;
+      color: var(--text-light);
+      font-size: 1rem;
+    }
+
+    /* FORM SECTIONS */
+    .form-section {
+      background: var(--cream-dark);
+      border: 1px solid rgba(184,149,90,0.35);
+      padding: 2rem 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--rose);
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .form-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--burgundy);
+      margin-bottom: 0.3rem;
+    }
+
+    .form-section .section-desc {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      font-style: italic;
+      margin-bottom: 1.2rem;
+    }
+
+    /* FIELD */
+    .field {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 0.5rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      padding: 0.8rem 1rem;
+      font-family: 'EB Garamond', serif;
+      font-size: 1rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+      border-radius: 0;
+      -webkit-appearance: none;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus {
+      border-color: var(--burgundy);
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    /* RADIO GROUP */
+    .radio-group {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+
+    .radio-option input[type="radio"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border: 1px solid var(--border);
+      background: var(--cream);
+      cursor: pointer;
+      position: relative;
+      flex-shrink: 0;
+      transition: border-color 0.2s;
+    }
+
+    .radio-option input[type="radio"]:checked {
+      border-color: var(--burgundy);
+      background: var(--burgundy);
+    }
+
+    .radio-option input[type="radio"]:checked::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 6px;
+      height: 6px;
+      background: var(--cream);
+      border-radius: 50%;
+    }
+
+    .radio-option span {
+      font-family: 'EB Garamond', serif;
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    /* SUBMIT */
+    .submit-btn {
+      display: block;
+      width: 100%;
+      padding: 1.1rem 2rem;
+      background: var(--burgundy);
+      color: var(--cream);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 2rem;
+    }
+
+    .submit-btn:hover {
+      background: var(--burgundy-light);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(107,39,55,0.2);
+    }
+
+    /* THANK YOU */
+    .thank-you {
+      display: none;
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .thank-you.visible { display: block; }
+
+    .thank-you .ornament {
+      font-size: 2rem;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .thank-you h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--burgundy);
+      margin-bottom: 1rem;
+    }
+
+    .thank-you p {
+      color: var(--text-light);
+      font-style: italic;
+      max-width: 500px;
+      margin: 0.5rem auto;
+    }
+
+    .thank-you .back-link {
+      display: inline-block;
+      margin-top: 2rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--burgundy);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gold);
+      padding-bottom: 2px;
+    }
+
+    /* DEADLINE NOTE */
+    .deadline-note {
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      color: var(--text-light);
+      margin-top: 1rem;
+      font-style: italic;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: var(--burgundy);
+      color: var(--rose-light);
+    }
+
+    footer p {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--cream);
+    }
+
+    footer small {
+      display: block;
+      margin-top: 0.5rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      .form-section { padding: 1.5rem; }
+      .radio-group { flex-direction: column; gap: 0.8rem; }
+      .header-back { font-size: 0.7rem; letter-spacing: 0.1em; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="header-back">← Back</a>
+  <span class="header-title">Ale &amp; Kris · 28.08.2026</span>
+</header>
+
+<div class="rsvp-hero">
+  <div class="ornament">✦ ✦ ✦</div>
+  <h1>Confirm your Attendance</h1>
+  <div class="hero-divider"></div>
+  <p class="subtitle">Friday, 28th August 2026 &nbsp;·&nbsp; Castell de Sant Marçal</p>
+</div>
+
+<div class="form-container">
+  <p class="form-intro">We are most delighted that the arrangements are now taking shape in the most agreeable fashion.<br>Kindly confirm your attendance before the end of May 2026.</p>
+
+  <form id="rsvpForm" onsubmit="handleSubmit(event)">
+
+    <!-- GUEST NAMES -->
+    <div class="form-section">
+      <span class="form-section-title">Your Details</span>
+      <div class="field">
+        <label for="names">Guest Name(s)</label>
+        <input type="text" id="names" name="names" placeholder="Please write the names of all attendees in your group" required />
+      </div>
+    </div>
+
+    <!-- WEDDING DAY -->
+    <div class="form-section">
+      <span class="form-section-title">Chapter I · 28th August 2026</span>
+      <h3>The Wedding Day</h3>
+      <p class="section-desc">Friday, 28th August 2026 — 18:15h, Castell de Sant Marçal</p>
+      <div class="field">
+        <label>Will you be attending the wedding?</label>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="wedding" value="yes" required />
+            <span>Yes, with pleasure</span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="wedding" value="no" />
+            <span>Sorry, I/we can't make it</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- WELCOME DRINKS -->
+    <div class="form-section">
+      <span class="form-section-title">Chapter III · 27th August 2026</span>
+      <h3>Welcome Drinks</h3>
+      <p class="section-desc">Thursday, 27th August 2026 — Details coming soon</p>
+      <div class="field">
+        <label>Will you be attending the welcome drinks?</label>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="drinks" value="yes" />
+            <span>Yes, with pleasure</span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="drinks" value="no" />
+            <span>Sorry, I/we can't make it</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- POOL PARTY -->
+    <div class="form-section">
+      <span class="form-section-title">Chapter III · 29th August 2026</span>
+      <h3>Pool Party</h3>
+      <p class="section-desc">Saturday, 29th August 2026 — More information to follow</p>
+      <div class="field">
+        <label>Will you be attending the pool party?</label>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="pool" value="yes" />
+            <span>Yes, with pleasure</span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="pool" value="no" />
+            <span>Sorry, I/we can't make it</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRANSPORT -->
+    <div class="form-section">
+      <span class="form-section-title">Practical Details</span>
+      <h3>Transportation</h3>
+      <p class="section-desc">A private bus will be provided from Barcelona city centre</p>
+      <div class="field">
+        <label>Will you need the shuttle bus to the venue?</label>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="transport" value="yes" />
+            <span>Yes, I'll use the bus</span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="transport" value="no" />
+            <span>No, I'll arrange my own transport</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIETARY -->
+    <div class="form-section">
+      <span class="form-section-title">Practical Details</span>
+      <h3>Dietary Restrictions</h3>
+      <div class="field">
+        <label for="dietary">Do you or any of your guests have dietary restrictions or allergies?</label>
+        <textarea id="dietary" name="dietary" placeholder="Please describe any requirements (optional)"></textarea>
+      </div>
+    </div>
+
+    <!-- SONG REQUEST -->
+    <div class="form-section">
+      <span class="form-section-title">A Song for the Dance Floor</span>
+      <h3>Your Song Request</h3>
+      <p class="section-desc">Help us build the perfect playlist for the night</p>
+      <div class="field">
+        <label for="song">Is there a song you'd love to hear at the party?</label>
+        <input type="text" id="song" name="song" placeholder="Song title &amp; artist (optional)" />
+      </div>
+    </div>
+
+    <!-- COMMENTS -->
+    <div class="form-section">
+      <span class="form-section-title">Anything Else?</span>
+      <div class="field">
+        <label for="comments">Additional Comments or Questions</label>
+        <textarea id="comments" name="comments" placeholder="Any questions or notes for the bride and groom (optional)"></textarea>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn">Send RSVP</button>
+    <p class="deadline-note">Kindly respond before the end of May 2026 — Thank you</p>
+
+  </form>
+
+  <!-- THANK YOU MESSAGE -->
+  <div class="thank-you" id="thankYou">
+    <div class="ornament">✦</div>
+    <h2>Thank you so much.</h2>
+    <p>We have received your RSVP and cannot wait to celebrate with you.</p>
+    <p style="margin-top:1rem">We shall be in correspondence with all final particulars as the date draws near.</p>
+    <p style="margin-top:1.5rem; font-size:0.9rem">With all our love and warmest regards,</p>
+    <p style="font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--burgundy); font-style:italic; margin-top:0.3rem">Ale &amp; Kris</p>
+    <a href="index.html" class="back-link">Back to the wedding website</a>
+  </div>
+</div>
+
+<footer>
+  <p>Ale &amp; Kris</p>
+  <small>28 · 08 · 2026 &nbsp;·&nbsp; Castell de Sant Marçal, Barcelona</small>
+</footer>
+
+<script>
+  function handleSubmit(e) {
+    e.preventDefault();
+    const form = document.getElementById('rsvpForm');
+    const thankYou = document.getElementById('thankYou');
+    form.style.display = 'none';
+    thankYou.classList.add('visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>

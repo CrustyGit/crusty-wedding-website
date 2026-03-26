@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Ale &amp; Kris — 28th August 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html,body{width:100%;height:100%;overflow:hidden;background:#160804;touch-action:none;user-select:none;-webkit-user-select:none}
+
+    /* ── ROTATE PROMPT ── */
+    #rotate-prompt{display:none;position:fixed;inset:0;z-index:1000;background:#160804;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;text-align:center;padding:2rem}
+    #rotate-prompt.visible{display:flex}
+    .rotate-icon{font-size:3rem;animation:rhint 2.5s ease-in-out infinite}
+    @keyframes rhint{0%,100%{transform:rotate(0)}40%,60%{transform:rotate(90deg)}}
+    .rotate-text{font-family:Georgia,serif;font-style:italic;color:#C9A84C;font-size:clamp(0.85rem,3vw,1rem);line-height:1.7}
+
+    /* ── STAGE & TRACK ── */
+    #book-stage{position:fixed;inset:0}
+    #track{display:flex;height:100%;will-change:transform;transition:transform 0.42s cubic-bezier(0.4,0,0.2,1)}
+    #track.no-transition{transition:none}
+
+    /* ── SPREAD ── */
+    .spread{min-width:100vw;height:100%;display:flex;background:#160804;position:relative}
+    /* spine shadow */
+    .spread::after{content:'';position:absolute;top:0;bottom:0;left:calc(50% - 12px);width:24px;background:linear-gradient(to right,rgba(0,0,0,0.3) 0%,rgba(0,0,0,0.08) 35%,rgba(0,0,0,0.08) 65%,rgba(0,0,0,0.3) 100%);pointer-events:none;z-index:20}
+
+    /* Cover spread: image fills screen */
+    .spread-cover img{width:100%;height:100%;object-fit:contain;display:block}
+
+    /* ── PAGE ── */
+    .page{
+      flex:1;height:100%;position:relative;overflow:hidden;
+      background-color:#F5EDE3;
+      background-image:
+        radial-gradient(ellipse at 18% 18%, rgba(201,168,76,0.07) 0%, transparent 45%),
+        radial-gradient(ellipse at 82% 82%, rgba(201,168,76,0.07) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.25) 0%, transparent 65%);
+    }
+
+    /* double-line gold border */
+    .pb{position:absolute;inset:clamp(7px,1.2vh,11px);border:1px solid #C9A84C;pointer-events:none;z-index:5}
+    .pb::after{content:'';position:absolute;inset:4px;border:1px solid rgba(201,168,76,0.32)}
+
+    /* corner L-brackets */
+    .c{position:absolute;width:clamp(12px,2.2vh,20px);height:clamp(12px,2.2vh,20px);border-color:#C9A84C;border-style:solid;z-index:6}
+    .c.tl{top:clamp(4px,0.7vh,7px);left:clamp(4px,0.7vh,7px);border-width:1.5px 0 0 1.5px}
+    .c.tr{top:clamp(4px,0.7vh,7px);right:clamp(4px,0.7vh,7px);border-width:1.5px 1.5px 0 0}
+    .c.bl{bottom:clamp(4px,0.7vh,7px);left:clamp(4px,0.7vh,7px);border-width:0 0 1.5px 1.5px}
+    .c.br{bottom:clamp(4px,0.7vh,7px);right:clamp(4px,0.7vh,7px);border-width:0 1.5px 1.5px 0}
+
+    /* ── PAGE CONTENT ── */
+    .pc{position:relative;z-index:10;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:clamp(20px,4.5vh,38px) clamp(14px,2.8vw,26px) clamp(14px,3vh,26px);text-align:center;overflow:hidden}
+
+    /* ── TYPOGRAPHY ── */
+    .chnum{font-family:'Cormorant Garamond',serif;font-size:clamp(6.5px,1.1vh,9.5px);letter-spacing:0.35em;text-transform:uppercase;color:#C4848E;display:block;margin-bottom:0.25em}
+    .chtitle{font-family:'Playfair Display',serif;font-size:clamp(10px,2vh,17px);font-weight:400;color:#2A1508;letter-spacing:0.05em;line-height:1.2;margin-bottom:0.3em}
+    .chtitle em{font-style:italic}
+    .grule{width:55%;height:1px;background:linear-gradient(to right,transparent,#C9A84C,transparent);margin:0.45em auto;opacity:0.7}
+    .gorn{color:#C9A84C;font-size:clamp(7px,1.3vh,11px);letter-spacing:0.45em;display:block;margin:0.35em 0;opacity:0.75}
+    .body{font-family:'EB Garamond',Georgia,serif;font-size:clamp(8px,1.5vh,12.5px);line-height:1.8;color:#3D1F10;text-align:center;max-width:92%}
+    .body em{font-style:italic}
+    .body strong{font-family:'Playfair Display',serif;font-weight:600;font-size:0.95em;letter-spacing:0.04em}
+    .lbl{font-family:'Cormorant Garamond',serif;font-size:clamp(6px,1vh,8.5px);letter-spacing:0.3em;text-transform:uppercase;color:#C4848E;display:block;margin-top:0.7em;margin-bottom:0.1em}
+    .val{font-family:'Playfair Display',serif;font-size:clamp(9px,1.7vh,14px);color:#2A1508;display:block;line-height:1.25}
+    .sub{font-family:'EB Garamond',serif;font-size:clamp(7px,1.25vh,10.5px);font-style:italic;color:#6B3E26;display:block;line-height:1.5}
+    .signoff{font-family:'Cormorant Garamond',serif;font-size:clamp(12px,2.6vh,21px);font-style:italic;font-weight:300;color:#2A1508;letter-spacing:0.02em;margin-top:0.5em}
+
+    /* schedule */
+    .sched{width:88%;margin-top:0.3em}
+    .sr{display:flex;align-items:flex-start;gap:0.5em;padding:0.28em 0;border-bottom:1px solid rgba(201,168,76,0.2);text-align:left}
+    .sr:last-child{border-bottom:none}
+    .st{font-family:'Cormorant Garamond',serif;font-size:clamp(6.5px,1.1vh,9.5px);color:#C9A84C;min-width:clamp(26px,4.5vw,42px);letter-spacing:0.04em;padding-top:0.1em;flex-shrink:0}
+    .sn{font-family:'Playfair Display',serif;font-size:clamp(7.5px,1.35vh,11px);color:#2A1508;display:block;font-weight:400;line-height:1.25}
+    .sd{font-family:'EB Garamond',serif;font-size:clamp(6.5px,1.1vh,9.5px);font-style:italic;color:#6B3E26;display:block;line-height:1.4}
+
+    /* TOC */
+    .toc{width:88%;margin-top:0.4em}
+    .tr-row{display:flex;align-items:flex-start;gap:0.4em;padding:0.32em 0;border-bottom:1px solid rgba(201,168,76,0.2);text-decoration:none}
+    .tn{font-family:'Cormorant Garamond',serif;font-size:clamp(6px,1vh,8.5px);color:#C4848E;letter-spacing:0.12em;min-width:clamp(22px,3.5vw,34px);text-transform:uppercase;flex-shrink:0;padding-top:0.15em}
+    .tt{font-family:'Playfair Display',serif;font-size:clamp(7.5px,1.35vh,11px);color:#2A1508;flex:1;text-align:left;line-height:1.25}
+    .ts{font-family:'EB Garamond',serif;font-size:clamp(6px,1vh,8.5px);font-style:italic;color:#6B3E26;display:block;line-height:1.3}
+
+    /* hotel list */
+    .hlist{list-style:none;width:86%;text-align:left;margin-top:0.3em}
+    .hlist li{font-family:'Playfair Display',serif;font-size:clamp(7.5px,1.3vh,11px);color:#2A1508;padding:0.22em 0 0.22em 0.6em;border-left:1.5px solid rgba(201,168,76,0.55);margin-bottom:0.2em;line-height:1.3}
+
+    /* FAQ */
+    .flist{width:88%;text-align:left;margin-top:0.3em}
+    .fq{font-family:'Playfair Display',serif;font-size:clamp(7px,1.25vh,10px);color:#2A1508;font-weight:600;display:block;margin-top:0.55em;line-height:1.25}
+    .fa{font-family:'EB Garamond',serif;font-size:clamp(6.5px,1.1vh,9.5px);color:#6B3E26;font-style:italic;line-height:1.5;display:block}
+
+    /* RSVP button */
+    .rsvp-btn{display:inline-block;margin-top:0.7em;padding:clamp(0.35em,0.7vh,0.6em) clamp(0.8em,2.5vw,1.6em);background:#5B1A2A;color:#FAF6F0;font-family:'Cormorant Garamond',serif;font-size:clamp(6.5px,1.1vh,9.5px);letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;border:1px solid #C9A84C}
+
+    /* locked */
+    .locked{border:1px dashed rgba(201,168,76,0.45);padding:0.6em 0.8em;max-width:85%;margin-top:0.5em}
+
+    /* IBAN */
+    .iban{font-family:'Cormorant Garamond',serif;font-size:clamp(7px,1.25vh,10px);letter-spacing:0.1em;color:#2A1508;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.38);padding:0.35em 0.7em;display:inline-block;margin-top:0.45em;word-break:break-all}
+
+    /* closing page (burgundy) */
+    .closing{background:#5B1A2A !important;background-image:none !important}
+    .closing .pb{border-color:rgba(201,168,76,0.45)}
+    .closing .c{border-color:rgba(201,168,76,0.45)}
+    .closing .chtitle,.closing .val,.closing .signoff{color:#FAF6F0}
+    .closing .body,.closing .sub{color:rgba(240,232,220,0.8)}
+    .closing .gorn{opacity:0.55}
+
+    /* ── NAV ── */
+    .nav-arrow{position:fixed;top:50%;transform:translateY(-50%);z-index:50;width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.32);border-radius:50%;cursor:pointer;transition:all 0.2s;backdrop-filter:blur(3px)}
+    .nav-arrow:hover{background:rgba(201,168,76,0.28)}
+    .nav-arrow.hidden{opacity:0;pointer-events:none}
+    #prev-btn{left:9px}
+    #next-btn{right:9px}
+    .nav-arrow svg{width:15px;height:15px;stroke:#C9A84C;fill:none;stroke-width:2}
+    #page-indicator{position:fixed;bottom:9px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:50}
+    .dot{width:5px;height:5px;border-radius:50%;background:rgba(201,168,76,0.22);border:1px solid rgba(201,168,76,0.42);transition:all 0.3s;cursor:pointer}
+    .dot.active{background:#C9A84C;transform:scale(1.3)}
+    #hint{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);font-family:Georgia,serif;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(201,168,76,0.42);z-index:50;animation:fhint 3.5s ease-out forwards;white-space:nowrap}
+    @keyframes fhint{0%{opacity:0}20%{opacity:1}75%{opacity:1}100%{opacity:0}}
+    #fullscreen-btn{position:fixed;top:9px;right:9px;z-index:50;width:30px;height:30px;display:flex;align-items:center;justify-content:center;background:rgba(201,168,76,0.09);border:1px solid rgba(201,168,76,0.28);border-radius:50%;cursor:pointer}
+    #fullscreen-btn svg{width:13px;height:13px;stroke:rgba(201,168,76,0.6);fill:none;stroke-width:2}
+    #home-btn{position:fixed;top:9px;left:9px;z-index:50;font-family:Georgia,serif;font-size:0.56rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(201,168,76,0.48);text-decoration:none;background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.2);padding:0.32rem 0.65rem}
+  </style>
+</head>
+<body>
+
+<!-- ROTATE PROMPT -->
+<div id="rotate-prompt">
+  <div class="rotate-icon">📖</div>
+  <p class="rotate-text">Rotate your phone to landscape<br>for the full book experience</p>
+</div>
+
+<div id="book-stage">
+<div id="track">
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SPREAD 0: COVER                           -->
+<!-- ══════════════════════════════════════════ -->
+<div class="spread spread-cover">
+  <img src="images/hero.jpg" alt="Ale &amp; Kris — 28th August 2026" />
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SPREAD 1: LETTER (left) + TOC (right)     -->
+<!-- ══════════════════════════════════════════ -->
+<div class="spread">
+
+  <!-- LEFT: Letter -->
+  <div class="page">
+    <div class="pb"></div>
+    <div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
+    <div class="pc">
+      <span class="chnum">A Letter</span>
+      <h2 class="chtitle">To Our Friends &amp;<br><em>Beloved Companions</em></h2>
+      <div class="grule"></div>
+      <p class="body">
+        It is with the greatest of joy, and no small measure of happy disbelief, that we find ourselves penning these words. To celebrate this most momentous chapter of our lives surrounded by those we hold most dear is a privilege beyond all adequate expression.
+      </p>
+      <p class="body" style="margin-top:0.5em">
+        Each of you holds a most particular place in our hearts. Your presence on the 28th of August shall mean more than words could ever hope to convey.
+      </p>
+      <p class="body" style="margin-top:0.5em">
+        Ours shall be a celebration for adults only. We wish for you to surrender all responsibilities for the evening — and give yourselves entirely to the joy of the occasion.
+      </p>
+      <p class="body" style="margin-top:0.5em">
+        Kindly confirm your attendance before the close of May 2026, so that every last detail may be arranged with the care and delight it deserves.
+      </p>
+      <div class="grule" style="margin-top:0.6em"></div>
+      <span class="signoff">With all our love,<br>Ale &amp; Kris</span>
+    </div>
+  </div>
+
+  <!-- RIGHT: TOC -->
+  <div class="page">
+    <div class="pb"></div>
+    <div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
+    <div class="pc">
+      <span class="chnum">An International Novel</span>
+      <h2 class="chtitle">Table of Contents</h2>
+      <div class="grule"></div>
+      <div class="toc">
+        <div class="tr-row"><span class="tn">I</span><span class="tt">The Wedding<span class="ts">Date &amp; Location</span></span></div>
+        <div class="tr-row"><span class="tn">II</span><span class="tt">Access &amp; Arrival<span class="ts">Map, Parking &amp; Transport</span></span></div>
+        <div class="tr-row"><span class="tn">III</span><span class="tt">The Weekend<span class="ts">Welcome Drinks &amp; Pool Party</span></span></div>
+        <div class="tr-row"><span class="tn">IV</span><span class="tt">The Celebration<span class="ts">Timeline &amp; Details</span></span></div>
+        <div class="tr-row"><span class="tn">V</span><span class="tt">RSVP<span class="ts">Confirm your Attendance</span></span></div>
+        <div class="tr-row"><span class="tn">VI</span><span class="tt">Table Plan &amp; Menu<span class="ts">Coming Soon</span></span></div>
+        <div class="tr-row"><span class="tn">VII</span><span class="tt">Accommodation &amp; Tips<span class="ts">Where to Stay &amp; What to Do</span></span></div>
+        <div class="tr-row" style="border-bottom:none"><span class="tn">VIII</span><span class="tt">Frequently Asked Questions<span class="ts">Everything Else</span></span></div>
+      </div>
+      <span class="gorn" style="margin-top:0.8em">❧ ❧ ❧</span>
+      <span class="sub">Friday, 28th August 2026<br>Castell de Sant Marçal · Barcelona</span>
+    </div>
+  </div>
+
+</div><!-- /spread 1 -->
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SPREAD 2: COUPLE'S STORY                  -->
+<!-- ══════════════════════════════════════════ -->
+<div class="spread">
+
+  <!-- LEFT -->
+  <div class="page">
+    <div class="pb"></div>
+    <div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
+    <div class="pc">
+      <span class="chnum">An International Novel</span>
+      <h2 class="chtitle">The Couple's Story</h2>
+      <div class="grule"></div>
+      <p class="body">Once upon a time, a little girl named Alexandra was born in Lisbon — though she would forever insist she is half Brazilian, despite carrying a surname that is unmistakably German. Perhaps fate was already hinting at the curious mixture of worlds that lay ahead. For six years later, in the German city of Bielefeld — a place most famous for not being famous at all — a boy named Kristoffer entered the world.</p>
+      <p class="body" style="margin-top:0.5em">For many years, their paths did not cross. After spending time in Portugal, Italy, Brazil and New York, Ale built her life beneath the sunny skies of Barcelona, while Kris went all the way to Mexico only to later settle in the far rainier streets of London. One might say they are just as different as the cities they call home. And yet, as everyone knows, opposites have a most curious habit of attracting one another.</p>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="page">
+    <div class="pb"></div>
+    <div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
+    <div class="pc">
+      <p class="body">And so it was that, one summer evening in Ibiza, destiny quietly intervened. They met at a dinner with mutual friends — a dinner Ale was very eager to attend and Kris was not eager to attend at all. As it happens, friends, Covid, Neymar and Anitta all played their own peculiar roles in the chain of unlikely events that brought them to the same table.</p>
+      <p class="body" style="margin-top:0.5em">On the night of the wedding celebration, just after midnight, it will be exactly six years since that evening in Ibiza — August 29th, 2020 — when their story truly began.</p>
+      <p class="body" style="margin-top:0.5em">Six years of a long-distance relationship that was not always easy, yet somehow brought them closer with each passing day. Six years of growing together, learning from one another, and slowly becoming not only partners, but the very best of friends.</p>
+      <div class="grule" style="margin-top:0.6em"></div>
+      <p class="body"><em>And the rest, dear reader, is the story that continues. ✨</em></p>
+      <span class="signoff" style="margin-top:0.6em">Ale &amp; Kris</span>
+    </div>
+  </div>
+
+</div><!-- /spread 2 -->
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SPREAD 3: CH I (left) + CH II (right)     -->
+<!-- ══════════════════════════════════════════ -->
+<div class="spread">
+
+  <!-- LEFT: Chapter I -->
+  <div class="page">
+    <div class="pb"></div>
+    <div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
+    <div class="pc">
+      <span class="chnum">Chapter I</span>
+      <h2 class="chtitle">The Wedding</h2>
+      <div class="grule"></div>
+      <span class="lbl">Date</span>
+      <span class="val">Friday, 28th August 2026</span>
+      <span class="lbl">Venue</span>
+      <span class="val">Castell de Sant Marçal</span>
+      <span class="sub">Cerdanyola del Vallès, Barcelona</span>
+      <span class="lbl">Arrival Time</span>
+      <span class="val">18:15h</span>
+      <div class="grule" style="margin-top:0.7em"></div>
+      <p class="body"><em>Kindly arrive on time, so the celebration may unfold beautifully and without interruption.</em></p>
+      <span class="gorn" style="margin-top:0.7em">— ✦ —</span>
+    </div>
+  </div>
+
+  <!-- RIGHT: Chapter II -->
+  <div class="page">
+    <div class="pb"></div>
+    <div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
+    <div class="pc">
+      <span class="chnum">Chapter II</span>
+      <h2 class="chtitle">Access &amp; Arrival</h2>
+      <div class="grule"></div>
+      <span class="lbl">Address</span>
+      <span class="val" style="font-size:clamp(8px,1.4vh,11px)">Castell de Sant Marçal<br>110154 Acceso provisional, 41<br>08290 Cerdanyola del Vallès, Barcelona</span>
+      <a href="https://maps.google.com/?q=Castell+de+Sant+Marcal+Cerdanyola+del+Valles+Barcelona" target="_blank" class="rsvp-btn" style="margin-top:0.5em">Open in Maps</a>
+      <span class="lbl" style="margin-top:0.6em">Parking</span>
+      <span class="sub">On-site parking available. Kindly inform us in advance if you plan to drive.</span>
+      <span class="lbl">Getting There</span>
+      <span class="sub">A private bus shall be provided from Barcelona city centre. Alternatively, Cabify, Uber or taxi takes approximately 30 minutes at around €30. Please let us know your preference when you RSVP.</span>
+    </div>
+  </div>
+
+</div><!-- /spread 3 -->
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SPREAD 4: CH III WEEKEND                  -->
+<!-- ══════════════════════════════════════════ -->
+<div class="spread">
+
+  <!-- LEFT: Welcome Drinks -->
+  <div class="page">
+    <div class="pb"></div>
+    <div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
+    <div class="pc">
+      <span class="chnum">Chapter III — The Weekend</span>
+      <h2 class="chtitle">Welcome Drinks</h2>
+      <div class="grule"></div>
+      <span class="lbl">Thursday, 27th August 2026</span>
+      <p class="body" style="margin-top:0.6em">An intimate gathering the evening before the wedding to greet each other and begin the celebration together.</p>
+      <p class="body" style="margin-top:0.5em"><em>Details coming soon.</em></p>
+      <span class="gorn" style="margin-top:1.2em">❧</span>
+    </div>
+  </div>
+
+  <!-- RIGHT: Pool Party -->
+  <div class="page">
+    <div class="pb"></div>
+    <div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
+    <div class="pc">
+      <span class="chnum">Chapter III — The Weekend</span>
+      <h2 class="chtitle">Pool Party</h2>
+      <div class="grule"></div>
+      <span class="lbl">Saturday, 29th August 2026</span>
+      <p class="body" style="margin-top:0.6em">A post-wedding afternoon to relax by the pool and enjoy the Barcelona sun together.</p>
+      <p class="body" style="margin-top:0.5em"><em>More information to follow.</em></p>
+      <span class="gorn" style="margin-top:1.2em">❧</span>
+    </div>
+  </div>
+
+</div><!-- /spread 4 -->
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SPREAD 5: CH IV THE DAY + CH V RSVP       -->
+<!-- ══════════════════════════════════════════ -->
+<div class="spread">
+
+  <!-- LEFT: The Day -->
+  <div class="page">
+    <div class="pb"></div>
+    <div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
+    <div class="pc">
+      <span class="chnum">Chapter IV</span>
+      <h2 class="chtitle">The Celebration</h2>
+      <div class="grule"></div>
+      <span class="sub" style="margin-bottom:0.4em;display:block">Friday, 28th August 2026 — Castell de Sant Marçal</span>
+      <div class="sched">
+        <div class="sr"><span class="st">18:15h</span><div><span class="sn">Welcome Guests</span><span class="sd">Arrival at the castle</span></div></div>
+        <div class="sr"><span class="st">—</span><div><span class="sn">Ceremony</span><span class="sd">Late afternoon in the gardens</span></div></div>
+        <div class="sr"><span class="st">—</span><div><span class="sn">Cocktail Hour</span><span class="sd">Signature drinks, appetizers &amp; live music</span></div></div>
+        <div class="sr"><span class="st">—</span><div><span class="sn">Dinner</span><span class="sd">A seated celebration under the stars</span></div></div>
+        <div class="sr" style="border-bottom:none"><span class="st">—</span><div><span class="sn">Party</span><span class="sd">Dancing until 3:30 AM &amp; late night snacks</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: RSVP -->
+  <div class="page">
+    <div class="pb"></div>
+    <div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
+    <div class="pc">
+      <span class="chnum">Chapter V</span>
+      <h2 class="chtitle">RSVP</h2>
+      <div class="grule"></div>
+      <p class="body">Kindly confirm your attendance before the end of May 2026.</p>
+      <p class="body" style="margin-top:0.5em">Please let us know whether you will be joining us for the Wedding Day, Welcome Drinks, and Pool Party.</p>
+      <a href="rsvp.html" class="rsvp-btn">Confirm your Attendance</a>
+      <div class="grule" style="margin-top:0.9em"></div>
+      <span class="sub" style="margin-top:0.3em">Friday, 28th August 2026 · 18:15h<br>Castell de Sant Marçal, Barcelona</span>
+    </div>
+  </div>
+
+</div><!-- /spread 5 -->
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SPREAD 6: CH VI LOCKED + CH VII HOTELS    -->
+<!-- ══════════════════════════════════════════ -->
+<div class="spread">
+
+  <!-- LEFT: Table Plan (locked) -->
+  <div class="page">
+    <div class="pb"></div>
+    <div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
+    <div class="pc">
+      <span class="chnum">Chapter VI</span>
+      <h2 class="chtitle">Table Plan &amp;<br><em>Seating &amp; Menu</em></h2>
+      <div class="grule"></div>
+      <div class="locked">
+        <span style="font-size:1.2em;opacity:0.4;display:block;margin-bottom:0.4em">🔒</span>
+        <p class="body" style="font-family:'Playfair Display',serif;font-style:italic;color:#2A1508">This chapter shall be unveiled closer to the date.</p>
+        <p class="body" style="margin-top:0.4em">Kindly return here to discover where you shall be seated and the delicious banquet prepared for the occasion. This information will be available exclusively here — not in print.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Accommodation intro + hotels -->
+  <div class="page">
+    <div class="pb"></div>
+    <div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
+    <div class="pc">
+      <span class="chnum">Chapter VII</span>
+      <h2 class="chtitle">Accommodation &amp; Tips</h2>
+      <div class="grule"></div>
+      <p class="body"><em>We do hope you shall permit yourself the pleasure of lingering in this most splendid of cities.</em></p>
+      <span class="lbl" style="margin-top:0.5em">By the Sea</span>
+      <ul class="hlist">
+        <li>W Barcelona</li><li>Hotel Arts Barcelona</li><li>Duquesa de Cardona</li><li>Soho House Barcelona</li>
+      </ul>
+      <span class="lbl">In the Heart of the City</span>
+      <ul class="hlist">
+        <li>Condes de Barcelona</li><li>Hotel Palace Barcelona</li><li>OD Barcelona</li><li>Mandarin Oriental</li><li>Hotel Monumental</li><li>Hotel Majestic</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- /spread 6 -->
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SPREAD 7: CH VII TIPS + CH VIII FAQ       -->
+<!-- ══════════════════════════════════════════ -->
+<div class="spread">
+
+  <!-- LEFT: Tips + Getting Around -->
+  <div class="page">
+    <div class="pb"></div>
+    <div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
+    <div class="pc">
+      <span class="chnum">Chapter VII — Continued</span>
+      <h2 class="chtitle">Diversions &amp; Getting About</h2>
+      <div class="grule"></div>
+      <p class="body"><em>The city rewards those who venture on foot. For greater distances, Cabify or Uber shall prove most reliable. The castle lies but thirty minutes from the city centre.</em></p>
+      <p class="body" style="margin-top:0.4em"><em>A word of gentle counsel: Raval and Las Ramblas, whilst not without character, are perhaps not the most restful of addresses. One is warmly advised to seek lodgings elsewhere.</em></p>
+      <span class="lbl" style="margin-top:0.5em">Pursuits Most Recommended</span>
+      <ul class="hlist" style="margin-top:0.3em">
+        <li>The Gothic Quarter &amp; El Born</li>
+        <li>Sagrada Família &amp; Park Güell <em style="font-size:0.9em">(reserve in advance)</em></li>
+        <li>La Boqueria market</li>
+        <li>A long luncheon in Barceloneta</li>
+        <li>A Sunday in Gràcia</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- RIGHT: FAQ -->
+  <div class="page">
+    <div class="pb"></div>
+    <div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
+    <div class="pc">
+      <span class="chnum">Chapter VIII</span>
+      <h2 class="chtitle">Frequently Asked Questions</h2>
+      <div class="grule"></div>
+      <div class="flist">
+        <span class="fq">Are children allowed?</span>
+        <span class="fa">Our wedding is an adults-only celebration. We would love for you to fully relax and enjoy the day without any responsibilities.</span>
+        <span class="fq">What is the best way to get there?</span>
+        <span class="fa">A private shuttle bus from Barcelona city centre (times TBC closer to the date). Alternatively, Cabify, Uber or taxi (~30 min, ~€30).</span>
+        <span class="fq">Can I take photos during the ceremony?</span>
+        <span class="fa">Please refrain during the vows — we have entrusted a professional photographer to capture every moment. Outside of the vows, please take all the photos you wish!</span>
+        <span class="fq">What about dietary restrictions?</span>
+        <span class="fa">Please let us know when you RSVP and we will ensure the catering team accommodates you.</span>
+        <span class="fq">What if I cannot attend?</span>
+        <span class="fa">Please RSVP "no" as soon as possible. We completely understand that circumstances can change.</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /spread 7 -->
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SPREAD 8: GIFTS + CLOSING                 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="spread">
+
+  <!-- LEFT: Gift / Dress Code -->
+  <div class="page">
+    <div class="pb"></div>
+    <div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
+    <div class="pc">
+      <span class="chnum">One More Thing</span>
+      <h2 class="chtitle">Chic Wedding Attire</h2>
+      <span class="sub" style="margin-bottom:0.8em;display:block">Timeless elegance for a castle soirée.</span>
+      <div class="grule"></div>
+      <span class="chnum" style="margin-top:0.8em">With Love</span>
+      <h2 class="chtitle" style="margin-top:0.2em">A Note on Gifts</h2>
+      <p class="body" style="margin-top:0.4em">Your presence at our celebration is, without question, the greatest gift one could bestow upon us.</p>
+      <p class="body" style="margin-top:0.4em">Should you wish to honour us with a token of your affection, a contribution towards our honeymoon would be received with the deepest gratitude.</p>
+      <div class="iban">ES57 0081 0025 2100 0416 4925</div>
+      <p class="body" style="margin-top:0.5em"><em>We thank you most sincerely for the honour of your place in our story.</em></p>
+    </div>
+  </div>
+
+  <!-- RIGHT: Closing -->
+  <div class="page closing">
+    <div class="pb"></div>
+    <div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
+    <div class="pc">
+      <span class="gorn" style="font-size:clamp(10px,1.8vh,15px);letter-spacing:0.6em;margin-bottom:0.5em">✦ ✦ ✦</span>
+      <h2 class="chtitle" style="font-size:clamp(11px,2.2vh,18px);letter-spacing:0.1em">We Truly Hope<br>You Will Join Us</h2>
+      <div class="grule"></div>
+      <span class="signoff" style="font-size:clamp(14px,3vh,24px);margin-top:0.6em">Ale &amp; Kris</span>
+      <div class="grule" style="margin-top:0.6em"></div>
+      <span class="sub" style="color:rgba(240,232,220,0.7);margin-top:0.3em">28 · 08 · 2026</span>
+      <span class="sub" style="color:rgba(240,232,220,0.7)">Castell de Sant Marçal · Barcelona</span>
+      <span class="gorn" style="margin-top:1em;font-size:clamp(10px,1.8vh,15px)">❧ ❧ ❧</span>
+      <a href="index.html" style="display:inline-block;margin-top:0.8em;font-family:'Cormorant Garamond',serif;font-size:clamp(6.5px,1.1vh,9.5px);letter-spacing:0.2em;text-transform:uppercase;color:rgba(201,168,76,0.55);text-decoration:none">≡ Full Website</a>
+    </div>
+  </div>
+
+</div><!-- /spread 8 -->
+
+</div><!-- /track -->
+</div><!-- /book-stage -->
+
+<!-- NAV -->
+<button class="nav-arrow hidden" id="prev-btn" aria-label="Previous"><svg viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg></button>
+<button class="nav-arrow" id="next-btn" aria-label="Next"><svg viewBox="0 0 24 24"><polyline points="9,6 15,12 9,18"/></svg></button>
+<div id="page-indicator"></div>
+<div id="hint">swipe to turn the page</div>
+<button id="fullscreen-btn" aria-label="Fullscreen" onclick="toggleFullscreen()"><svg viewBox="0 0 24 24"><polyline points="15,3 21,3 21,9"/><polyline points="9,21 3,21 3,15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+<a href="index.html" id="home-btn">≡ Menu</a>
+
+<script>
+const TOTAL=9,track=document.getElementById('track'),prevBtn=document.getElementById('prev-btn'),nextBtn=document.getElementById('next-btn'),indicator=document.getElementById('page-indicator');
+let current=0;
+for(let i=0;i<TOTAL;i++){const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.addEventListener('click',()=>goTo(i));indicator.appendChild(d)}
+function goTo(n,anim=true){if(n<0||n>=TOTAL)return;if(!anim)track.classList.add('no-transition');else track.classList.remove('no-transition');current=n;track.style.transform=`translateX(-${current*100}vw)`;document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===current));prevBtn.classList.toggle('hidden',current===0);nextBtn.classList.toggle('hidden',current===TOTAL-1)}
+prevBtn.addEventListener('click',()=>goTo(current-1));nextBtn.addEventListener('click',()=>goTo(current+1));
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(current+1);if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(current-1)});
+let txs=0,tys=0,txc=0,drag=false;
+const T=55;
+document.addEventListener('touchstart',e=>{txs=e.touches[0].clientX;tys=e.touches[0].clientY;txc=txs;drag=false},{passive:true});
+document.addEventListener('touchmove',e=>{const dx=e.touches[0].clientX-txs,dy=e.touches[0].clientY-tys;if(!drag&&Math.abs(dx)>8){drag=true}if(drag){txc=e.touches[0].clientX;track.classList.add('no-transition');track.style.transform=`translateX(${-(current*window.innerWidth)+(txc-txs)}px)`}},{passive:true});
+document.addEventListener('touchend',()=>{track.classList.remove('no-transition');if(!drag)return;const dx=txc-txs;if(dx<-T&&current<TOTAL-1)goTo(current+1);else if(dx>T&&current>0)goTo(current-1);else goTo(current);drag=false},{passive:true});
+let mxs=0,mxc=0,md=false;
+document.addEventListener('mousedown',e=>{mxs=e.clientX;mxc=e.clientX;md=true});
+document.addEventListener('mousemove',e=>{if(!md)return;mxc=e.clientX;track.classList.add('no-transition');track.style.transform=`translateX(${-(current*window.innerWidth)+(mxc-mxs)}px)`});
+document.addEventListener('mouseup',()=>{if(!md)return;md=false;track.classList.remove('no-transition');const dx=mxc-mxs;if(dx<-T&&current<TOTAL-1)goTo(current+1);else if(dx>T&&current>0)goTo(current-1);else goTo(current)});
+const rp=document.getElementById('rotate-prompt'),bs=document.getElementById('book-stage');
+function checkOri(){const port=window.innerHeight>window.innerWidth,mob=window.innerWidth<=1024||'ontouchstart'in window;if(port&&mob){rp.classList.add('visible');bs.style.visibility='hidden'}else{rp.classList.remove('visible');bs.style.visibility='visible';try{screen.orientation.lock('landscape').catch(()=>{})}catch(e){}}}
+window.addEventListener('resize',checkOri);window.addEventListener('orientationchange',()=>setTimeout(checkOri,100));checkOri();
+function toggleFullscreen(){if(!document.fullscreenElement)document.documentElement.requestFullscreen().catch(()=>{});else document.exitFullscreen()}
+const hint=document.getElementById('hint');
+['touchend','mouseup','keydown'].forEach(ev=>document.addEventListener(ev,()=>hint.remove(),{once:true}));
+[prevBtn,nextBtn].forEach(b=>b.addEventListener('click',()=>hint.remove(),{once:true}));
+document.querySelectorAll('.spread img').forEach(img=>{const p=new Image();p.src=img.src});
+</script>
+</body>
+</html>

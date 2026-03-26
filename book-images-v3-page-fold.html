@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Ale &amp; Kris — 28th August 2026</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #0e0604; touch-action: none; user-select: none; -webkit-user-select: none; }
+
+    #rotate-prompt { display: none; position: fixed; inset: 0; z-index: 1000; background: #0e0604; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem; text-align: center; padding: 2rem; }
+    #rotate-prompt.visible { display: flex; }
+    .rotate-icon { font-size: 3.5rem; animation: rotate-hint 2s ease-in-out infinite; }
+    @keyframes rotate-hint { 0%, 100% { transform: rotate(0deg); } 40% { transform: rotate(90deg); } 60% { transform: rotate(90deg); } }
+    .rotate-text { font-family: Georgia, serif; font-size: 1rem; font-style: italic; color: #C9A84C; letter-spacing: 0.08em; line-height: 1.6; }
+
+    #book-stage { position: fixed; inset: 0; overflow: hidden; }
+    #track { display: flex; height: 100%; will-change: transform; transition: none; }
+
+    .spread { min-width: 100vw; height: 100%; position: relative; display: flex; align-items: center; justify-content: center; background: #0e0604; }
+    .spread img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; pointer-events: none; }
+    .spread::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,0.18) 0%, transparent 6%, transparent 94%, rgba(0,0,0,0.18) 100%); pointer-events: none; }
+
+    .rsvp-overlay { position: absolute; right: 4%; bottom: 14%; z-index: 10; }
+    .rsvp-btn { display: block; padding: 0.65rem 1.8rem; background: #5B1A2A; color: #FAF6F0; font-family: Georgia, serif; font-size: 0.8rem; letter-spacing: 0.25em; text-transform: uppercase; text-decoration: none; border: 1px solid #C9A84C; }
+
+    .nav-arrow { position: fixed; top: 50%; transform: translateY(-50%); z-index: 50; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.4); border-radius: 50%; cursor: pointer; transition: all 0.2s; backdrop-filter: blur(4px); }
+    .nav-arrow:hover { background: rgba(201,168,76,0.3); }
+    .nav-arrow.hidden { opacity: 0; pointer-events: none; }
+    #prev-btn { left: 12px; }
+    #next-btn { right: 12px; }
+    .nav-arrow svg { width: 18px; height: 18px; stroke: #C9A84C; fill: none; stroke-width: 2; }
+
+    #page-indicator { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 50; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(201,168,76,0.3); border: 1px solid rgba(201,168,76,0.5); transition: all 0.3s; cursor: pointer; }
+    .dot.active { background: #C9A84C; transform: scale(1.3); }
+
+    #hint { position: fixed; bottom: 36px; left: 50%; transform: translateX(-50%); font-family: Georgia, serif; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(201,168,76,0.5); z-index: 50; animation: fade-hint 3s ease-out forwards; white-space: nowrap; }
+    @keyframes fade-hint { 0% { opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; } }
+
+    #fullscreen-btn { position: fixed; top: 12px; right: 12px; z-index: 50; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.35); border-radius: 50%; cursor: pointer; }
+    #fullscreen-btn svg { width: 16px; height: 16px; stroke: rgba(201,168,76,0.7); fill: none; stroke-width: 2; }
+    #home-btn { position: fixed; top: 12px; left: 12px; z-index: 50; font-family: Georgia, serif; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(201,168,76,0.55); text-decoration: none; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.25); padding: 0.4rem 0.8rem; }
+
+    /* ── PAGE FOLD OVERLAY ── */
+    #fold-wrapper {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: none;
+      overflow: hidden;
+      background: #0e0604;
+    }
+
+    /* The page being revealed behind the fold */
+    #fold-reveal {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0e0604;
+    }
+    #fold-reveal img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+      pointer-events: none;
+    }
+    #fold-reveal::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.18) 0%, transparent 6%, transparent 94%, rgba(0,0,0,0.18) 100%);
+      pointer-events: none;
+    }
+
+    /* The folding flap — the current page peeling away */
+    #fold-flap {
+      position: absolute;
+      inset: 0;
+      will-change: transform;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0e0604;
+    }
+    #fold-flap img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+      pointer-events: none;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    #fold-flap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.18) 0%, transparent 6%, transparent 94%, rgba(0,0,0,0.18) 100%);
+      pointer-events: none;
+    }
+
+    /* Crease shadow — appears on the fold edge */
+    #fold-crease {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 70px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.05s;
+    }
+    /* forward fold: crease on left edge of the flap */
+    #fold-crease.forward {
+      left: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 40%, transparent 100%);
+    }
+    /* backward fold: crease on right edge */
+    #fold-crease.backward {
+      right: 0;
+      left: auto;
+      background: linear-gradient(to left, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 40%, transparent 100%);
+    }
+
+    /* ToC hotspot overlay */
+    .toc-hotspots {
+      position: absolute; inset: 0; pointer-events: none;
+    }
+    .toc-link {
+      position: absolute;
+      left: 50%; width: 48%;   /* right page only */
+      display: block;
+      pointer-events: all;
+      cursor: pointer;
+      /* Debug: uncomment below to visualise hotspots */
+      /* background: rgba(201,168,76,0.2); border: 1px solid rgba(201,168,76,0.5); */
+    }
+    .toc-link:hover { background: rgba(201,168,76,0.12); border-radius: 2px; }
+  </style>
+</head>
+<body>
+
+<div id="rotate-prompt">
+  <div class="rotate-icon">📖</div>
+  <p class="rotate-text">Rotate your phone to landscape<br>for the full book experience<br><br><small style="font-size:0.75em;opacity:0.7;">Tap here if it doesn't open automatically</small></p>
+</div>
+
+<div id="book-stage">
+  <div id="track">
+
+    <div class="spread"><img src="images/hero.jpg" alt="Ale &amp; Kris — Cover" /></div>
+    <div class="spread"><img src="images/book-intro.jpg" alt="Welcome &amp; Table of Contents" />
+    <div class="toc-hotspots">
+      <a href="#" data-page="3" class="toc-link" title="Chapter I — The Wedding" style="top:16.0%;height:7%;"></a>
+      <a href="#" data-page="4" class="toc-link" title="Chapter II — Access & Arrival" style="top:26.0%;height:7%;"></a>
+      <a href="#" data-page="5" class="toc-link" title="Chapter III — The Weekend" style="top:36.0%;height:7%;"></a>
+      <a href="#" data-page="6" class="toc-link" title="Chapter IV — The Celebration" style="top:46.0%;height:7%;"></a>
+      <a href="#" data-page="6" class="toc-link" title="Chapter V — Practical Details" style="top:55.0%;height:7%;"></a>
+      <a href="#" data-page="6" class="toc-link" title="Chapter VI — RSVP" style="top:65.0%;height:7%;"></a>
+      <a href="#" data-page="7" class="toc-link" title="Chapter VII — Seating & Menu" style="top:74.0%;height:7%;"></a>
+      <a href="#" data-page="8" class="toc-link" title="Chapter VIII — Accommodation" style="top:82.5%;height:7%;"></a>
+    </div>
+    </div>
+    <div class="spread"><img src="images/book-story.jpg" alt="The Couple's Story" /></div>
+    <div class="spread"><img src="images/book-ch1.jpg" alt="Chapter I — The Wedding" /></div>
+    <div class="spread"><img src="images/book-ch2.jpg" alt="Chapter II — How to Get There" /></div>
+    <div class="spread"><img src="images/book-ch3.jpg" alt="Chapter III — The Weekend" /></div>
+    <div class="spread">
+      <img src="images/book-ch4.jpg" alt="Chapter IV — The Day &amp; RSVP" />
+      <div class="rsvp-overlay"><a href="rsvp.html" class="rsvp-btn">RSVP →</a></div>
+    </div>
+    <div class="spread"><img src="images/book-gift.jpg" alt="Chapter VII — Table Plan &amp; Menu &amp; Wedding Gift" /></div>
+    <div class="spread"><img src="images/book-ch6.jpg" alt="Chapter VIII — Accommodation &amp; Tips" /></div> <!-- TODO: add FAQ page image when Ana provides it -->
+
+  </div>
+</div>
+
+<!-- Page fold animation overlay -->
+<div id="fold-wrapper">
+  <div id="fold-reveal"><img id="fold-reveal-img" alt="" /></div>
+  <div id="fold-flap">
+    <img id="fold-flap-img" alt="" />
+    <div id="fold-crease"></div>
+  </div>
+</div>
+
+<button class="nav-arrow hidden" id="prev-btn"><svg viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg></button>
+<button class="nav-arrow" id="next-btn"><svg viewBox="0 0 24 24"><polyline points="9,6 15,12 9,18"/></svg></button>
+<div id="page-indicator"></div>
+<div id="hint">swipe to turn the page</div>
+<button id="fullscreen-btn" onclick="toggleFullscreen()"><svg viewBox="0 0 24 24"><polyline points="15,3 21,3 21,9"/><polyline points="9,21 3,21 3,15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+<a href="index.html" id="home-btn">≡ Menu</a>
+
+<script>
+  // ── PAGE NAVIGATION ──
+  const TOTAL = 9;
+  const track = document.getElementById('track');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const indicator = document.getElementById('page-indicator');
+  let current = 0;
+
+  for (let i = 0; i < TOTAL; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => goToAnimated(i));
+    indicator.appendChild(d);
+  }
+
+  function updateUI() {
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
+    prevBtn.classList.toggle('hidden', current === 0);
+    nextBtn.classList.toggle('hidden', current === TOTAL - 1);
+  }
+
+  // Instant jump (no animation) — used by fold completion
+  function goToInstant(n) {
+    if (n < 0 || n >= TOTAL) return;
+    resetZoom(getCurrentImg());
+    current = n;
+    track.style.transform = `translateX(-${current * 100}vw)`;
+    updateUI();
+  }
+
+  // Animated go (used by arrows, dots, keyboard)
+  function goToAnimated(n) {
+    if (n < 0 || n >= TOTAL || foldAnimating) return;
+    const dir = n > current ? 1 : -1;
+    if (Math.abs(n - current) === 1) {
+      // Use fold animation for adjacent pages
+      initFold(dir, () => goToInstant(n));
+      completeFoldAnimation();
+    } else {
+      goToInstant(n);
+    }
+  }
+
+  prevBtn.addEventListener('click', () => goToAnimated(current - 1));
+  nextBtn.addEventListener('click', () => goToAnimated(current + 1));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') goToAnimated(current + 1);
+    if (e.key === 'ArrowLeft') goToAnimated(current - 1);
+  });
+
+  // ── ZOOM STATE ──
+  let scale = 1, lastScale = 1;
+  let panX = 0, panY = 0;
+  let zoomed = false;
+
+  function getCurrentImg() {
+    return document.querySelectorAll('.spread')[current]?.querySelector('img');
+  }
+
+  function applyTransform(img) {
+    if (!img) return;
+    img.style.transition = 'none';
+    img.style.transformOrigin = 'center center';
+    img.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+  }
+
+  function resetZoom(img) {
+    scale = 1; lastScale = 1; panX = 0; panY = 0; zoomed = false;
+    if (img) { img.style.transform = ''; img.style.transition = 'transform 0.25s ease'; }
+  }
+
+  function clampPan() {
+    const img = getCurrentImg();
+    if (!img) return;
+    const maxX = Math.max(0, (img.clientWidth * scale - window.innerWidth) / 2);
+    const maxY = Math.max(0, (img.clientHeight * scale - window.innerHeight) / 2);
+    panX = Math.max(-maxX, Math.min(maxX, panX));
+    panY = Math.max(-maxY, Math.min(maxY, panY));
+  }
+
+  function touchDist(t) {
+    return Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
+  }
+
+  // ── PAGE FOLD ANIMATION ──
+  const foldWrapper  = document.getElementById('fold-wrapper');
+  const foldFlap     = document.getElementById('fold-flap');
+  const foldFlapImg  = document.getElementById('fold-flap-img');
+  const foldReveal   = document.getElementById('fold-reveal');
+  const foldRevealImg = document.getElementById('fold-reveal-img');
+  const foldCrease   = document.getElementById('fold-crease');
+
+  let foldDir = 0;        // 1 = forward, -1 = backward
+  let foldAnimating = false;
+  let foldCallback = null;
+  let foldInProgress = false; // true while swipe-driven fold is shown
+
+  function getSpreadImgSrc(idx) {
+    const spreads = document.querySelectorAll('.spread img');
+    return spreads[idx] ? spreads[idx].src : '';
+  }
+
+  function initFold(dir, callback) {
+    if (foldAnimating) return false;
+    const targetIdx = current + dir;
+    if (targetIdx < 0 || targetIdx >= TOTAL) return false;
+
+    foldDir = dir;
+    foldCallback = callback || null;
+
+    // Set images
+    foldFlapImg.src = getSpreadImgSrc(current);
+    foldRevealImg.src = getSpreadImgSrc(targetIdx);
+
+    // Configure crease and transform-origin based on direction
+    if (dir === 1) {
+      // Forward: fold current page from right → left (peel from right edge)
+      foldFlap.style.transformOrigin = 'left center';
+      foldCrease.className = 'forward';
+    } else {
+      // Backward: fold current page from left → right (peel from left edge)
+      foldFlap.style.transformOrigin = 'right center';
+      foldCrease.className = 'backward';
+    }
+
+    foldFlap.style.transition = 'none';
+    foldFlap.style.transform = 'perspective(1800px) rotateY(0deg)';
+    foldCrease.style.opacity = '0';
+    foldWrapper.style.display = 'block';
+    foldInProgress = true;
+    return true;
+  }
+
+  function updateFoldProgress(progress) {
+    // progress: 0 → 1 (fully flipped)
+    const angle = progress * 180;
+    if (foldDir === 1) {
+      foldFlap.style.transform = `perspective(1800px) rotateY(-${angle}deg)`;
+    } else {
+      foldFlap.style.transform = `perspective(1800px) rotateY(${angle}deg)`;
+    }
+    // Shadow peaks at 90° (midpoint), fades at 0° and 180°
+    const shadowOpacity = Math.min(1, Math.sin(progress * Math.PI) * 1.3);
+    foldCrease.style.opacity = shadowOpacity.toFixed(3);
+  }
+
+  function completeFoldAnimation() {
+    if (!foldInProgress) return;
+    foldAnimating = true;
+    foldFlap.style.transition = 'transform 0.38s cubic-bezier(0.4, 0.0, 0.6, 1)';
+    updateFoldProgress(1);
+
+    setTimeout(() => {
+      foldWrapper.style.display = 'none';
+      foldFlap.style.transition = 'none';
+      foldInProgress = false;
+      foldAnimating = false;
+      if (foldCallback) { foldCallback(); foldCallback = null; }
+      else goToInstant(current + foldDir);
+    }, 380);
+  }
+
+  function cancelFoldAnimation() {
+    if (!foldInProgress) return;
+    foldAnimating = true;
+    foldFlap.style.transition = 'transform 0.28s cubic-bezier(0.4, 0.0, 0.2, 1)';
+    updateFoldProgress(0);
+    foldCrease.style.opacity = '0';
+
+    setTimeout(() => {
+      foldWrapper.style.display = 'none';
+      foldFlap.style.transition = 'none';
+      foldInProgress = false;
+      foldAnimating = false;
+    }, 280);
+  }
+
+  // ── UNIFIED TOUCH HANDLER ──
+  let touchState = 'idle';
+  let pinchStartDist = 0;
+  let panStartX = 0, panStartY = 0;
+  let swipeStartX = 0, swipeCurrentX = 0;
+  let swipeDirLocked = false;
+  let lastTap = 0;
+
+  document.addEventListener('touchstart', e => {
+    if (foldAnimating) return;
+
+    if (e.touches.length === 2) {
+      if (foldInProgress) cancelFoldAnimation();
+      touchState = 'pinching';
+      pinchStartDist = touchDist(e.touches);
+      lastScale = scale;
+    } else if (e.touches.length === 1) {
+      if (zoomed) {
+        touchState = 'panning';
+        panStartX = e.touches[0].clientX - panX;
+        panStartY = e.touches[0].clientY - panY;
+      } else {
+        touchState = 'swiping';
+        swipeStartX = e.touches[0].clientX;
+        swipeCurrentX = swipeStartX;
+        swipeDirLocked = false;
+      }
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchmove', e => {
+    if (foldAnimating) return;
+    const img = getCurrentImg();
+
+    if (touchState === 'pinching' && e.touches.length === 2) {
+      e.preventDefault();
+      const newDist = touchDist(e.touches);
+      scale = Math.min(5, Math.max(1, lastScale * (newDist / pinchStartDist)));
+      zoomed = scale > 1.05;
+      clampPan();
+      applyTransform(img);
+
+    } else if (touchState === 'panning' && e.touches.length === 1) {
+      e.preventDefault();
+      panX = e.touches[0].clientX - panStartX;
+      panY = e.touches[0].clientY - panStartY;
+      clampPan();
+      applyTransform(img);
+
+    } else if (touchState === 'swiping' && e.touches.length === 1) {
+      swipeCurrentX = e.touches[0].clientX;
+      const dx = swipeCurrentX - swipeStartX;
+
+      // Lock direction once we know it
+      if (!swipeDirLocked && Math.abs(dx) > 8) {
+        const dir = dx < 0 ? 1 : -1;
+        const canTurn = (dir === 1 && current < TOTAL - 1) || (dir === -1 && current > 0);
+        if (canTurn) {
+          initFold(dir);
+          swipeDirLocked = true;
+        } else {
+          // Edge of book — no fold
+          swipeDirLocked = true;
+        }
+      }
+
+      if (foldInProgress) {
+        e.preventDefault();
+        const absDx = Math.abs(dx);
+        const progress = Math.min(1, absDx / window.innerWidth);
+        updateFoldProgress(progress);
+      }
+    }
+  }, { passive: false });
+
+  document.addEventListener('touchend', e => {
+    if (foldAnimating) return;
+    const img = getCurrentImg();
+
+    if (touchState === 'pinching') {
+      lastScale = scale;
+      if (scale < 1.05) resetZoom(img);
+      if (e.touches.length === 1 && zoomed) {
+        touchState = 'panning';
+        panStartX = e.touches[0].clientX - panX;
+        panStartY = e.touches[0].clientY - panY;
+      } else {
+        touchState = 'idle';
+      }
+
+    } else if (touchState === 'panning') {
+      touchState = 'idle';
+
+    } else if (touchState === 'swiping') {
+      const dx = swipeCurrentX - swipeStartX;
+
+      if (foldInProgress) {
+        const threshold = window.innerWidth * 0.28;
+        if (Math.abs(dx) > threshold) {
+          completeFoldAnimation();
+        } else {
+          cancelFoldAnimation();
+        }
+      }
+
+      touchState = 'idle';
+      swipeDirLocked = false;
+
+      // Double-tap detection
+      if (Math.abs(dx) < 10) {
+        const now = Date.now();
+        if (now - lastTap < 280) {
+          if (zoomed) { resetZoom(img); }
+          else { scale = 2.5; lastScale = 2.5; zoomed = true; panX = 0; panY = 0; applyTransform(img); }
+        }
+        lastTap = now;
+      }
+    }
+  }, { passive: true });
+
+  // ── ORIENTATION ── (soft hint only, never blocks)
+  const rp = document.getElementById('rotate-prompt'), bs = document.getElementById('book-stage');
+
+  // Preload all images immediately
+  ['images/hero.jpg','images/book-intro.jpg','images/book-story.jpg',
+   'images/book-ch1.jpg','images/book-ch2.jpg','images/book-ch3.jpg',
+   'images/book-ch4.jpg','images/book-gift.jpg','images/book-ch6.jpg'
+  ].forEach(src => { const i = new Image(); i.src = src; });
+
+  // Show hint in portrait on mobile, auto-dismiss after 3s, tap to dismiss
+  function checkOri() {
+    const port = window.innerHeight > window.innerWidth;
+    const mob  = 'ontouchstart' in window;
+    if (port && mob) {
+      rp.classList.add('visible');
+      bs.style.visibility = 'visible'; // book still visible behind hint
+      setTimeout(() => rp.classList.remove('visible'), 3000);
+    } else {
+      rp.classList.remove('visible');
+    }
+    try { screen.orientation.lock('landscape').catch(()=>{}); } catch(e) {}
+  }
+  rp.addEventListener('click', () => rp.classList.remove('visible'));
+  window.addEventListener('resize', () => setTimeout(checkOri, 200));
+  window.addEventListener('orientationchange', () => setTimeout(checkOri, 300));
+  checkOri();
+
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {});
+    else document.exitFullscreen();
+  }
+
+  // Initialise track position
+  track.style.transform = `translateX(0vw)`;
+  updateUI();
+
+  document.addEventListener('touchend', () => document.getElementById('hint')?.remove(), { once: true });
+  // ── TOC HOTSPOT NAVIGATION ──
+  document.querySelectorAll('.toc-link').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = parseInt(a.dataset.page);
+      goToAnimated(target);
+    });
+  });
+
+</script>
+</body>
+</html>

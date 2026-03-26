@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Ale &amp; Kris — 28th August 2026</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #0e0604; touch-action: none; user-select: none; -webkit-user-select: none; }
+
+    #rotate-prompt { display: none; position: fixed; inset: 0; z-index: 1000; background: #0e0604; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem; text-align: center; padding: 2rem; }
+    #rotate-prompt.visible { display: flex; }
+    .rotate-icon { font-size: 3.5rem; animation: rotate-hint 2s ease-in-out infinite; }
+    @keyframes rotate-hint { 0%, 100% { transform: rotate(0deg); } 40% { transform: rotate(90deg); } 60% { transform: rotate(90deg); } }
+    .rotate-text { font-family: Georgia, serif; font-size: 1rem; font-style: italic; color: #C9A84C; letter-spacing: 0.08em; line-height: 1.6; }
+
+    #book-stage { position: fixed; inset: 0; overflow: hidden; }
+    #track { display: flex; height: 100%; will-change: transform; transition: transform 0.42s cubic-bezier(0.4, 0.0, 0.2, 1); }
+    #track.no-transition { transition: none; }
+
+    .spread { min-width: 100vw; height: 100%; position: relative; display: flex; align-items: center; justify-content: center; background: #0e0604; }
+    .spread img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; pointer-events: none; }
+    .spread::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,0.18) 0%, transparent 6%, transparent 94%, rgba(0,0,0,0.18) 100%); pointer-events: none; }
+
+    .rsvp-overlay { position: absolute; right: 4%; bottom: 14%; z-index: 10; }
+    .rsvp-btn { display: block; padding: 0.65rem 1.8rem; background: #5B1A2A; color: #FAF6F0; font-family: Georgia, serif; font-size: 0.8rem; letter-spacing: 0.25em; text-transform: uppercase; text-decoration: none; border: 1px solid #C9A84C; }
+
+    .nav-arrow { position: fixed; top: 50%; transform: translateY(-50%); z-index: 50; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.4); border-radius: 50%; cursor: pointer; transition: all 0.2s; backdrop-filter: blur(4px); }
+    .nav-arrow:hover { background: rgba(201,168,76,0.3); }
+    .nav-arrow.hidden { opacity: 0; pointer-events: none; }
+    #prev-btn { left: 12px; }
+    #next-btn { right: 12px; }
+    .nav-arrow svg { width: 18px; height: 18px; stroke: #C9A84C; fill: none; stroke-width: 2; }
+
+    #page-indicator { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 50; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(201,168,76,0.3); border: 1px solid rgba(201,168,76,0.5); transition: all 0.3s; cursor: pointer; }
+    .dot.active { background: #C9A84C; transform: scale(1.3); }
+
+    #hint { position: fixed; bottom: 36px; left: 50%; transform: translateX(-50%); font-family: Georgia, serif; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(201,168,76,0.5); z-index: 50; animation: fade-hint 3s ease-out forwards; white-space: nowrap; }
+    @keyframes fade-hint { 0% { opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; } }
+
+    #fullscreen-btn { position: fixed; top: 12px; right: 12px; z-index: 50; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.35); border-radius: 50%; cursor: pointer; }
+    #fullscreen-btn svg { width: 16px; height: 16px; stroke: rgba(201,168,76,0.7); fill: none; stroke-width: 2; }
+    #home-btn { position: fixed; top: 12px; left: 12px; z-index: 50; font-family: Georgia, serif; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(201,168,76,0.55); text-decoration: none; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.25); padding: 0.4rem 0.8rem; }
+  </style>
+</head>
+<body>
+
+<div id="rotate-prompt">
+  <div class="rotate-icon">📖</div>
+  <p class="rotate-text">Rotate your phone to landscape<br>for the full book experience</p>
+</div>
+
+<div id="book-stage">
+  <div id="track">
+
+    <div class="spread"><img src="images/hero.jpg" alt="Ale &amp; Kris — Cover" /></div>
+    <div class="spread"><img src="images/book-intro.png" alt="Welcome &amp; Table of Contents" /></div>
+    <div class="spread"><img src="images/book-story.jpg" alt="The Couple's Story" /></div>
+    <div class="spread"><img src="images/book-ch1.jpg" alt="Chapter I — The Wedding" /></div>
+    <div class="spread"><img src="images/book-ch2.jpg" alt="Chapter II — How to Get There" /></div>
+    <div class="spread"><img src="images/book-ch3.jpg" alt="Chapter III — The Weekend" /></div>
+    <div class="spread">
+      <img src="images/book-ch4.jpg" alt="Chapter IV — The Day &amp; RSVP" />
+      <div class="rsvp-overlay"><a href="rsvp.html" class="rsvp-btn">RSVP →</a></div>
+    </div>
+    <div class="spread"><img src="images/book-ch5.jpg" alt="Chapter VII — Table Plan &amp; Menu" /></div>
+
+  </div>
+</div>
+
+<button class="nav-arrow hidden" id="prev-btn"><svg viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg></button>
+<button class="nav-arrow" id="next-btn"><svg viewBox="0 0 24 24"><polyline points="9,6 15,12 9,18"/></svg></button>
+<div id="page-indicator"></div>
+<div id="hint">swipe to turn the page</div>
+<button id="fullscreen-btn" onclick="toggleFullscreen()"><svg viewBox="0 0 24 24"><polyline points="15,3 21,3 21,9"/><polyline points="9,21 3,21 3,15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+<a href="index.html" id="home-btn">≡ Menu</a>
+
+<script>
+  // ── PAGE NAVIGATION ──
+  const TOTAL = 8;
+  const track = document.getElementById('track');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const indicator = document.getElementById('page-indicator');
+  let current = 0;
+
+  for (let i = 0; i < TOTAL; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => goTo(i));
+    indicator.appendChild(d);
+  }
+
+  function goTo(n) {
+    if (n < 0 || n >= TOTAL) return;
+    resetZoom(getCurrentImg());
+    current = n;
+    track.classList.remove('no-transition');
+    track.style.transform = `translateX(-${current * 100}vw)`;
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
+    prevBtn.classList.toggle('hidden', current === 0);
+    nextBtn.classList.toggle('hidden', current === TOTAL - 1);
+  }
+
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft') goTo(current - 1);
+  });
+
+  // ── ZOOM STATE ──
+  let scale = 1, lastScale = 1;
+  let panX = 0, panY = 0;
+  let zoomed = false;
+
+  function getCurrentImg() {
+    return document.querySelectorAll('.spread')[current]?.querySelector('img');
+  }
+
+  function applyTransform(img) {
+    if (!img) return;
+    img.style.transition = 'none';
+    img.style.transformOrigin = 'center center';
+    img.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+  }
+
+  function resetZoom(img) {
+    scale = 1; lastScale = 1; panX = 0; panY = 0; zoomed = false;
+    if (img) { img.style.transform = ''; img.style.transition = 'transform 0.25s ease'; }
+  }
+
+  function clampPan() {
+    const img = getCurrentImg();
+    if (!img) return;
+    const maxX = Math.max(0, (img.clientWidth * scale - window.innerWidth) / 2);
+    const maxY = Math.max(0, (img.clientHeight * scale - window.innerHeight) / 2);
+    panX = Math.max(-maxX, Math.min(maxX, panX));
+    panY = Math.max(-maxY, Math.min(maxY, panY));
+  }
+
+  function touchDist(t) {
+    return Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
+  }
+
+  // ── UNIFIED TOUCH HANDLER ──
+  // States: idle | pinching | panning | swiping
+  let touchState = 'idle';
+  let pinchStartDist = 0;
+  let panStartX = 0, panStartY = 0;
+  let swipeStartX = 0, swipeCurrentX = 0;
+  let lastTap = 0;
+
+  document.addEventListener('touchstart', e => {
+    if (e.touches.length === 2) {
+      // Always handle pinch, even mid-swipe
+      touchState = 'pinching';
+      pinchStartDist = touchDist(e.touches);
+      lastScale = scale;
+    } else if (e.touches.length === 1) {
+      if (zoomed) {
+        // When zoomed, single finger pans
+        touchState = 'panning';
+        panStartX = e.touches[0].clientX - panX;
+        panStartY = e.touches[0].clientY - panY;
+      } else {
+        // Not zoomed — might be a swipe to turn page
+        touchState = 'swiping';
+        swipeStartX = e.touches[0].clientX;
+        swipeCurrentX = swipeStartX;
+      }
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchmove', e => {
+    const img = getCurrentImg();
+    if (!img) return;
+
+    if (touchState === 'pinching' && e.touches.length === 2) {
+      e.preventDefault();
+      const newDist = touchDist(e.touches);
+      scale = Math.min(5, Math.max(1, lastScale * (newDist / pinchStartDist)));
+      zoomed = scale > 1.05;
+      clampPan();
+      applyTransform(img);
+
+    } else if (touchState === 'panning' && e.touches.length === 1) {
+      e.preventDefault();
+      panX = e.touches[0].clientX - panStartX;
+      panY = e.touches[0].clientY - panStartY;
+      clampPan();
+      applyTransform(img);
+
+    } else if (touchState === 'swiping' && e.touches.length === 1) {
+      swipeCurrentX = e.touches[0].clientX;
+      const dx = swipeCurrentX - swipeStartX;
+      // Move track to follow finger
+      track.classList.add('no-transition');
+      track.style.transform = `translateX(${-(current * window.innerWidth) + dx}px)`;
+    }
+  }, { passive: false });
+
+  document.addEventListener('touchend', e => {
+    const img = getCurrentImg();
+
+    if (touchState === 'pinching') {
+      lastScale = scale;
+      if (scale < 1.05) resetZoom(img);
+      // After pinch ends, if still one finger down, switch to panning
+      if (e.touches.length === 1 && zoomed) {
+        touchState = 'panning';
+        panStartX = e.touches[0].clientX - panX;
+        panStartY = e.touches[0].clientY - panY;
+      } else {
+        touchState = 'idle';
+      }
+
+    } else if (touchState === 'panning') {
+      touchState = 'idle';
+
+    } else if (touchState === 'swiping') {
+      track.classList.remove('no-transition');
+      const dx = swipeCurrentX - swipeStartX;
+      if (dx < -60 && current < TOTAL - 1) goTo(current + 1);
+      else if (dx > 60 && current > 0) goTo(current - 1);
+      else track.style.transform = `translateX(-${current * 100}vw)`;
+      touchState = 'idle';
+
+      // Double-tap detection (only when not zoomed/panning)
+      if (Math.abs(dx) < 10) {
+        const now = Date.now();
+        if (now - lastTap < 280) {
+          if (zoomed) { resetZoom(img); }
+          else { scale = 2.5; lastScale = 2.5; zoomed = true; panX = 0; panY = 0; applyTransform(img); }
+        }
+        lastTap = now;
+      }
+    }
+  }, { passive: true });
+
+  // ── ORIENTATION ──
+  const rp = document.getElementById('rotate-prompt'), bs = document.getElementById('book-stage');
+  function checkOri() {
+    const port = window.innerHeight > window.innerWidth, mob = window.innerWidth <= 1024 || 'ontouchstart' in window;
+    if (port && mob) { rp.classList.add('visible'); bs.style.visibility = 'hidden'; }
+    else { rp.classList.remove('visible'); bs.style.visibility = 'visible'; try { screen.orientation.lock('landscape').catch(() => {}); } catch(e) {} }
+  }
+  window.addEventListener('resize', checkOri);
+  window.addEventListener('orientationchange', () => setTimeout(checkOri, 100));
+  checkOri();
+
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {});
+    else document.exitFullscreen();
+  }
+
+  document.addEventListener('touchend', () => document.getElementById('hint')?.remove(), { once: true });
+  document.querySelectorAll('.spread img').forEach(img => { const p = new Image(); p.src = img.src; });
+</script>
+</body>
+</html>
