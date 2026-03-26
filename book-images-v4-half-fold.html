@@ -110,29 +110,30 @@
 
 <div id="book-stage">
   <div id="track">
-    <div class="spread"><img src="images/hero.jpg"       alt="Ale &amp; Kris — Cover" /></div>
-    <div class="spread"><img src="images/book-intro.jpg" alt="Welcome &amp; Table of Contents" />
+    <div class="spread"><img src="images-new/14.jpg"     alt="Ale &amp; Kris — Cover" /></div>
+    <div class="spread"><img src="images-new/15.jpg"     alt="Welcome &amp; Table of Contents" />
     <div class="toc-hotspots">
       <a href="#" data-page="3" class="toc-link" title="Chapter I — The Wedding" style="top:16.0%;height:7%;"></a>
-      <a href="#" data-page="4" class="toc-link" title="Chapter II — Access & Arrival" style="top:26.0%;height:7%;"></a>
+      <a href="#" data-page="4" class="toc-link" title="Chapter II — Access &amp; Arrival" style="top:26.0%;height:7%;"></a>
       <a href="#" data-page="5" class="toc-link" title="Chapter III — The Weekend" style="top:36.0%;height:7%;"></a>
-      <a href="#" data-page="6" class="toc-link" title="Chapter IV — The Celebration" style="top:46.0%;height:7%;"></a>
-      <a href="#" data-page="6" class="toc-link" title="Chapter V — Practical Details" style="top:55.0%;height:7%;"></a>
-      <a href="#" data-page="6" class="toc-link" title="Chapter VI — RSVP" style="top:65.0%;height:7%;"></a>
-      <a href="#" data-page="7" class="toc-link" title="Chapter VII — Seating & Menu" style="top:74.0%;height:7%;"></a>
-      <a href="#" data-page="8" class="toc-link" title="Chapter VIII — Accommodation" style="top:82.5%;height:7%;"></a>
+      <a href="#" data-page="6" class="toc-link" title="Chapter IV — The Day" style="top:46.0%;height:7%;"></a>
+      <a href="#" data-page="6" class="toc-link" title="Chapter V — RSVP" style="top:55.0%;height:7%;"></a>
+      <a href="#" data-page="7" class="toc-link" title="Chapter VI — Table Plan, Seating &amp; Menu" style="top:65.0%;height:7%;"></a>
+      <a href="#" data-page="7" class="toc-link" title="Chapter VII — Wedding Gift" style="top:74.0%;height:7%;"></a>
+      <a href="#" data-page="8" class="toc-link" title="Chapter VIII — Accommodation &amp; Tips" style="top:82.5%;height:7%;"></a>
     </div>
     </div>
-    <div class="spread"><img src="images/book-story.jpg" alt="The Couple's Story" /></div>
-    <div class="spread"><img src="images/book-ch1.jpg"   alt="Chapter I — The Wedding" /></div>
-    <div class="spread"><img src="images/book-ch2.jpg"   alt="Chapter II — How to Get There" /></div>
-    <div class="spread"><img src="images/book-ch3.jpg"   alt="Chapter III — The Weekend" /></div>
+    <div class="spread"><img src="images-new/16.jpg"     alt="The Couple's Story" /></div>
+    <div class="spread"><img src="images-new/17.jpg"     alt="Chapter I — The Wedding" /></div>
+    <div class="spread"><img src="images-new/18.jpg"     alt="Chapter II — Access &amp; Arrival" /></div>
+    <div class="spread"><img src="images-new/19.jpg"     alt="Chapter III — The Weekend" /></div>
     <div class="spread">
-      <img src="images/book-ch4.jpg" alt="Chapter IV — The Day &amp; RSVP" />
+      <img src="images-new/20.jpg" alt="Chapter IV — The Day &amp; Chapter V — RSVP" />
       <div class="rsvp-overlay"><a href="rsvp.html" class="rsvp-btn">RSVP →</a></div>
     </div>
-    <div class="spread"><img src="images/book-ch5.jpg"   alt="Chapter VII — Table Plan &amp; Menu" /></div>
-    <div class="spread"><img src="images/book-ch6.jpg"   alt="Chapter VIII — Accommodation &amp; Tips" /></div>
+    <div class="spread"><img src="images-new/21.jpg"     alt="Chapter VI — Table Plan &amp; Chapter VII — Wedding Gift" /></div>
+    <div class="spread"><img src="images-new/22.jpg"     alt="Chapter VIII — Accommodation &amp; Tips" /></div>
+    <div class="spread"><img src="images-new/23.jpg"     alt="Ale &amp; Kris — Back Cover" /></div>
   </div>
 </div>
 
@@ -441,9 +442,9 @@
   const rp = document.getElementById('rotate-prompt'), bs = document.getElementById('book-stage');
 
   // Preload all images immediately
-  ['images/hero.jpg','images/book-intro.jpg','images/book-story.jpg',
-   'images/book-ch1.jpg','images/book-ch2.jpg','images/book-ch3.jpg',
-   'images/book-ch4.jpg','images/book-ch5.jpg','images/book-ch6.jpg'
+  ['images-new/14.jpg','images-new/15.jpg','images-new/16.jpg',
+   'images-new/17.jpg','images-new/18.jpg','images-new/19.jpg',
+   'images-new/20.jpg','images-new/21.jpg','images-new/22.jpg','images-new/23.jpg'
   ].forEach(src => { const i = new Image(); i.src = src; });
 
   // Show hint in portrait on mobile, auto-dismiss after 3s, tap to dismiss
