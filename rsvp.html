@@ -513,13 +513,68 @@
 </footer>
 
 <script>
-  function handleSubmit(e) {
+  const API_URL = 'https://rsvp.aleandkris.com/rsvp';
+
+  async function handleSubmit(e) {
     e.preventDefault();
     const form = document.getElementById('rsvpForm');
+    const btn = form.querySelector('.submit-btn');
     const thankYou = document.getElementById('thankYou');
-    form.style.display = 'none';
-    thankYou.classList.add('visible');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const errorMsg = document.getElementById('errorMsg');
+
+    // Hide any previous error
+    if (errorMsg) errorMsg.style.display = 'none';
+
+    // Disable button while submitting
+    btn.disabled = true;
+    btn.textContent = 'SENDING…';
+
+    const data = {
+      names: form.names.value.trim(),
+      wedding: form.wedding.value,
+      drinks: (form.drinks && form.drinks.value) || '',
+      pool: (form.pool && form.pool.value) || '',
+      transport: (form.transport && form.transport.value) || '',
+      dietary: form.dietary.value.trim(),
+      song: form.song.value.trim(),
+      comments: form.comments.value.trim(),
+    };
+
+    try {
+      const resp = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      const result = await resp.json();
+
+      if (resp.ok && result.success) {
+        form.style.display = 'none';
+        thankYou.classList.add('visible');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        showError(result.error || 'Something went wrong. Please try again.');
+        btn.disabled = false;
+        btn.textContent = 'SEND RSVP';
+      }
+    } catch (err) {
+      showError('Could not reach the server. Please check your connection and try again.');
+      btn.disabled = false;
+      btn.textContent = 'SEND RSVP';
+    }
+  }
+
+  function showError(msg) {
+    let el = document.getElementById('errorMsg');
+    if (!el) {
+      el = document.createElement('p');
+      el.id = 'errorMsg';
+      el.style.cssText = 'color:#6B2737;text-align:center;font-style:italic;margin-top:1rem;';
+      document.querySelector('.submit-btn').insertAdjacentElement('afterend', el);
+    }
+    el.textContent = msg;
+    el.style.display = 'block';
   }
 </script>
 </body>
