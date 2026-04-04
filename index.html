@@ -3,995 +3,600 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ale &amp; Kris — 28th August 2026</title>
-  <meta name="description" content="The wedding of Alexandra &amp; Kristoffer — Friday, 28th August 2026, Castell de Sant Marçal, Barcelona" />
-  <meta property="og:title" content="Ale &amp; Kris — 28th August 2026" />
-  <meta property="og:description" content="You are invited to the wedding of Alexandra Schütz &amp; Kristoffer Tschischke — Friday, 28th August 2026, Castell de Sant Marçal, Barcelona" />
-  <meta property="og:image" content="https://aleandkris.com/images/hero.jpg" />
-  <meta property="og:url" content="https://aleandkris.com" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <link rel="icon" type="image/png" href="images/seal-logo.png" />
-  <link rel="apple-touch-icon" href="images/seal-logo.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>Ale &amp; Kris — 28 August 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
     :root {
-      --burgundy: #5B1A2A;
-      --burgundy-mid: #6B2035;
-      --burgundy-light: #8B3A4A;
-      --rose: #C4848E;
-      --rose-light: #E8C4C8;
-      --cream: #FAF6F0;
-      --parchment: #F5EDE3;
-      --parchment-dark: #EDE0CC;
-      --gold: #C9A84C;
-      --gold-light: #D4AF6A;
-      --text: #2A1508;
-      --text-mid: #3D1F10;
-      --text-light: #6B3E26;
-      --border-gold: #C9A84C;
+      --gold:      #C9A84C;
+      --dark:      #0e0604;
+      --mid:       #3A2010;
+      --cream:     #FAF6EF;
+      --parchment: #F2EBD9;
+      --white:     #FFFFFF;
+      --wine:      #5B1A2A;
+      --text:      #2D1E14;
+      --muted:     #8A7060;
+      --shadow:    0 4px 32px rgba(14,6,4,0.15);
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
 
     body {
-      background: #2A1508;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      background: var(--cream);
       color: var(--text);
-      font-family: 'EB Garamond', Georgia, serif;
-      font-size: 18px;
-      line-height: 1.85;
+      overflow-x: hidden;
     }
 
-    /* ─── HEADER ─── */
-    header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      background: var(--burgundy);
-      border-bottom: 1px solid var(--gold);
-      padding: 0 2rem;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .header-logo {
-      height: 36px;
-      opacity: 0.95;
-    }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 1.4rem;
-    }
-
-    nav ul li a {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.78rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--rose-light);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    nav ul li a:hover { color: var(--gold-light); }
-
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 4px;
-    }
-
-    .hamburger span {
-      display: block;
-      width: 22px;
-      height: 1.5px;
-      background: var(--rose-light);
-      transition: all 0.3s;
-    }
-
-    .mobile-nav {
-      display: none;
-      position: fixed;
-      top: 56px; left: 0; right: 0;
-      background: var(--burgundy);
-      border-bottom: 1px solid var(--gold);
-      z-index: 99;
-      padding: 1rem 1.5rem 1.5rem;
-    }
-
-    .mobile-nav.open { display: block; }
-
-    .mobile-nav ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.9rem;
-    }
-
-    .mobile-nav ul li a {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--rose-light);
-      text-decoration: none;
-    }
-
-    /* ─── HERO ─── */
-    .hero {
-      margin-top: 56px;
+    /* ── HERO ── */
+    #hero {
       position: relative;
-      width: 100%;
-      line-height: 0;
-    }
-
-    .hero img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    /* ─── CHAPTER DIVIDER ─── */
-    .chapter-divider {
-      background: var(--burgundy);
+      min-height: 100svh;
+      display: flex; align-items: center; justify-content: center;
       text-align: center;
-      padding: 2.5rem 1.5rem;
-      border-top: 1px solid rgba(201,168,76,0.3);
-      border-bottom: 1px solid rgba(201,168,76,0.3);
+      overflow: hidden;
     }
-
-    .chapter-divider .chapter-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.75rem;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: var(--gold);
-      display: block;
-      margin-bottom: 0.4rem;
+    #hero-bg {
+      position: absolute; inset: 0;
+      background: url('images/hero.jpg') center top/cover no-repeat;
+      background-color: #0e0604;
     }
-
-    .chapter-divider h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.4rem, 4vw, 2.2rem);
-      font-weight: 400;
-      color: var(--cream);
-      letter-spacing: 0.08em;
+    #hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 60%, rgba(14,6,4,0.7) 100%);
     }
-
-    .chapter-divider .gold-rule {
-      width: 80px;
-      height: 1px;
-      background: var(--gold);
-      margin: 1rem auto 0;
-      opacity: 0.5;
-    }
-
-    /* ─── BOOK IMAGE ─── */
-    .book-image {
-      width: 100%;
-      line-height: 0;
-      background: #1a0c04;
-    }
-
-    .book-image img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    /* ─── PARCHMENT CONTENT ─── */
-    .parchment {
-      background: var(--parchment);
-      background-image:
-        radial-gradient(ellipse at 10% 10%, rgba(201,168,76,0.06) 0%, transparent 50%),
-        radial-gradient(ellipse at 90% 90%, rgba(201,168,76,0.06) 0%, transparent 50%);
-      padding: 3.5rem 1.5rem 4rem;
-      position: relative;
-    }
-
-    .parchment::before {
-      content: '';
+    #hero-content {
       position: absolute;
-      inset: 12px;
-      border: 1px solid rgba(201,168,76,0.35);
-      pointer-events: none;
-    }
-
-    .parchment-inner {
-      max-width: 680px;
-      margin: 0 auto;
+      bottom: 3.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      padding: 0 2rem;
+      width: 100%;
+      max-width: 520px;
       text-align: center;
     }
 
-    .parchment h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.1rem, 3vw, 1.5rem);
-      font-weight: 400;
-      font-style: italic;
-      color: var(--burgundy);
-      margin: 2rem 0 0.6rem;
+    /* Countdown */
+    #countdown {
+      display: flex; gap: 1.5rem; justify-content: center;
+      margin-bottom: 2.5rem;
     }
-
-    .parchment p {
-      font-size: clamp(1rem, 2.5vw, 1.1rem);
-      color: var(--text-mid);
-      line-height: 1.9;
-      margin-bottom: 1rem;
-    }
-
-    .parchment .label {
+    .cd-unit { text-align: center; min-width: 52px; }
+    .cd-num {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 0.75rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--rose);
+      font-size: 2.4rem; font-weight: 500;
+      color: var(--white); line-height: 1;
       display: block;
-      margin-bottom: 0.3rem;
+    }
+    .cd-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.6rem; font-weight: 300;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-top: 4px; display: block;
+    }
+    .cd-sep {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; color: var(--gold);
+      opacity: 0.5; align-self: flex-start; margin-top: 4px;
     }
 
-    .parchment .gold-divider {
-      color: var(--gold);
-      font-size: 1rem;
-      letter-spacing: 0.6rem;
-      display: block;
-      margin: 1.5rem 0;
-      opacity: 0.7;
+    .hero-cta {
+      display: inline-block;
+      padding: 0.75rem 2.5rem;
+      background: var(--wine);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem; font-weight: 400;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(201,168,76,0.5);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .hero-cta:hover { background: #7a2038; border-color: var(--gold); }
+
+    /* ── SCROLL ARROW ── */
+    .scroll-arrow {
+      position: absolute; bottom: 2rem; left: 50%;
+      transform: translateX(-50%);
+      z-index: 2; opacity: 0.5;
+      animation: bounce 2s infinite;
+    }
+    .scroll-arrow svg { width: 24px; height: 24px; stroke: #fff; fill: none; stroke-width: 1.5; }
+    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 4.5rem 1.5rem;
+      max-width: 640px; margin: 0 auto;
     }
 
-    /* TOC */
-    .toc-grid {
+    .section-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem; font-weight: 400;
+      letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.6rem;
+      display: block;
+    }
+    .section-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(2.2rem, 7vw, 3rem);
+      color: var(--dark);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+    .section-divider {
+      width: 40px; height: 1px;
+      background: var(--gold); opacity: 0.6;
+      margin-bottom: 2rem;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--parchment);
+      border-radius: 3px;
+      box-shadow: var(--shadow);
+      padding: 2rem 1.8rem;
+      margin-bottom: 1.2rem;
+    }
+
+    /* ── THE DAY — timeline ── */
+    .timeline { list-style: none; }
+    .timeline li {
+      display: flex; align-items: baseline; gap: 1.2rem;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+    .timeline li:last-child { border-bottom: none; }
+    .tl-time {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem; font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--gold); min-width: 58px;
+      flex-shrink: 0;
+    }
+    .tl-event {
+      font-size: 1.05rem; font-weight: 400;
+      color: var(--text);
+    }
+    .tl-note {
+      font-size: 0.85rem; font-style: italic;
+      color: var(--muted); margin-top: 2px;
+      display: block;
+    }
+
+    /* ── GETTING THERE ── */
+    .transport-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0;
-      margin-top: 1.5rem;
-      border: 1px solid rgba(201,168,76,0.3);
-    }
-
-    .toc-item {
-      padding: 1rem 1.2rem;
-      text-decoration: none;
-      display: block;
-      border-bottom: 1px solid rgba(201,168,76,0.2);
-      border-right: 1px solid rgba(201,168,76,0.2);
-      transition: background 0.2s;
-      text-align: left;
-    }
-
-    .toc-item:hover { background: rgba(201,168,76,0.07); }
-
-    .toc-item:nth-child(even) { border-right: none; }
-
-    .toc-chapter-label {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--rose);
-      display: block;
-    }
-
-    .toc-chapter-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 0.95rem;
-      color: var(--burgundy);
-      display: block;
-      line-height: 1.3;
-    }
-
-    .toc-chapter-sub {
-      font-family: 'EB Garamond', serif;
-      font-size: 0.82rem;
-      font-style: italic;
-      color: var(--text-light);
-    }
-
-    /* info rows */
-    .info-row {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-      padding: 1.2rem 0;
-      border-bottom: 1px solid rgba(201,168,76,0.25);
-    }
-
-    .info-row:last-child { border-bottom: none; }
-
-    .info-label {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--rose);
-    }
-
-    .info-value {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.1rem, 2.5vw, 1.3rem);
-      color: var(--burgundy);
-    }
-
-    .info-sub {
-      font-size: 0.95rem;
-      font-style: italic;
-      color: var(--text-light);
-      line-height: 1.6;
-      margin-top: 0.1rem;
-    }
-
-    /* schedule */
-    .schedule-row {
-      display: grid;
-      grid-template-columns: 75px 1fr;
       gap: 1rem;
-      padding: 1rem 0;
-      border-bottom: 1px solid rgba(201,168,76,0.2);
-      text-align: left;
+      margin-bottom: 1.2rem;
+    }
+    .transport-card {
+      background: var(--parchment);
+      border-radius: 3px;
+      box-shadow: var(--shadow);
+      padding: 1.5rem 1.2rem;
+      text-align: center;
+    }
+    .transport-icon {
+      font-size: 1.6rem; margin-bottom: 0.6rem; display: block;
+    }
+    .transport-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text); margin-bottom: 0.4rem;
+    }
+    .transport-detail {
+      font-size: 0.9rem; color: var(--muted);
+      font-style: italic; line-height: 1.4;
+    }
+    .address-card {
+      background: var(--parchment);
+      border-radius: 3px;
+      box-shadow: var(--shadow);
+      padding: 1.5rem 1.8rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .address-card .pin { font-size: 1.3rem; flex-shrink: 0; }
+    .address-card p { font-size: 0.95rem; color: var(--muted); line-height: 1.6; }
+    .address-card a {
+      color: var(--gold); text-decoration: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem; letter-spacing: 0.15em;
+      text-transform: uppercase; display: block;
+      margin-top: 0.5rem;
     }
 
-    .schedule-row:last-child { border-bottom: none; }
+    /* ── THE WEEKEND ── */
+    .weekend-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 
-    .sched-time {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.9rem;
-      letter-spacing: 0.08em;
-      color: var(--gold);
-      padding-top: 0.15rem;
+    .weekend-card {
+      background: var(--parchment);
+      border-radius: 3px;
+      box-shadow: var(--shadow);
+      padding: 1.6rem 1.4rem;
+      border-top: 2px solid var(--gold);
+    }
+    .weekend-day {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.6rem; font-weight: 500;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.5rem;
+    }
+    .weekend-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.5rem; color: var(--text);
+      margin-bottom: 0.5rem; line-height: 1.1;
+    }
+    .weekend-desc {
+      font-size: 0.9rem; color: var(--muted);
+      font-style: italic; line-height: 1.5;
     }
 
-    .sched-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1rem;
-      color: var(--burgundy);
-      display: block;
-      font-weight: 400;
+    /* ── RSVP SECTION ── */
+    #rsvp-section { text-align: center; padding-bottom: 5rem; }
+    .rsvp-block {
+      background: var(--dark);
+      border-radius: 3px;
+      padding: 3rem 2rem;
+      text-align: center;
     }
-
-    .sched-desc {
-      font-size: 0.9rem;
-      font-style: italic;
-      color: var(--text-light);
+    .rsvp-block .section-title { color: var(--white); }
+    .rsvp-block p {
+      font-size: 1rem; font-style: italic;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 2rem; line-height: 1.7;
     }
-
-    /* hotel list */
-    .hotel-category { margin: 1.5rem 0; text-align: left; }
-
-    .hotel-cat-label {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--rose);
-      display: block;
-      margin-bottom: 0.6rem;
-    }
-
-    .hotel-list {
-      list-style: none;
-    }
-
-    .hotel-list li {
-      padding: 0.6rem 1rem;
-      border-left: 2px solid var(--gold-light);
-      margin-bottom: 0.4rem;
-      background: rgba(201,168,76,0.05);
-      font-family: 'Playfair Display', serif;
-      font-size: 1rem;
-      color: var(--text-mid);
-    }
-
-    /* FAQ */
-    .faq-item {
-      padding: 1.2rem 0;
-      border-bottom: 1px solid rgba(201,168,76,0.25);
-      text-align: left;
-    }
-
-    .faq-q {
-      font-family: 'Playfair Display', serif;
-      font-size: 1rem;
-      color: var(--burgundy);
-      margin-bottom: 0.4rem;
-      font-weight: 600;
-    }
-
-    .faq-a {
-      font-size: 0.98rem;
-      color: var(--text-light);
-      line-height: 1.8;
-    }
-
-    /* CTA button */
-    .cta-btn {
+    .rsvp-btn {
       display: inline-block;
-      padding: 0.9rem 2.8rem;
-      background: var(--burgundy);
-      color: var(--cream);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.9rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
+      padding: 0.85rem 3rem;
+      background: var(--wine);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem; font-weight: 400;
+      letter-spacing: 0.3em; text-transform: uppercase;
       text-decoration: none;
-      border: 1px solid var(--gold);
-      transition: all 0.3s;
-      margin-top: 1.5rem;
+      border: 1px solid rgba(201,168,76,0.5);
+      transition: background 0.2s;
+    }
+    .rsvp-btn:hover { background: #7a2038; }
+    .rsvp-deadline {
+      margin-top: 1.2rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem; font-weight: 300;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
     }
 
-    .cta-btn:hover {
-      background: var(--burgundy-light);
-    }
-
-    /* locked */
-    .locked-box {
-      padding: 2rem;
-      border: 1px dashed rgba(201,168,76,0.4);
-      margin: 1rem 0;
-    }
-
-    .lock-icon { font-size: 1.5rem; opacity: 0.4; margin-bottom: 0.8rem; display: block; }
-
-    /* IBAN */
-    .iban {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.05rem;
-      letter-spacing: 0.12em;
-      color: var(--burgundy);
-      background: rgba(201,168,76,0.1);
-      border: 1px solid rgba(201,168,76,0.4);
-      padding: 0.7rem 1.5rem;
-      display: inline-block;
-      margin-top: 1rem;
-      word-break: break-all;
-    }
-
-    /* dress code */
-    .dress-code-section {
-      background: var(--burgundy);
-      text-align: center;
-      padding: 4rem 2rem;
-      border-top: 1px solid rgba(201,168,76,0.3);
-      border-bottom: 1px solid rgba(201,168,76,0.3);
-    }
-
-    .dress-code-section .ornament {
-      color: var(--gold);
-      font-size: 1.2rem;
-      letter-spacing: 0.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .dress-code-section h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.5rem, 4vw, 2.4rem);
-      font-weight: 400;
-      letter-spacing: 0.12em;
-      color: var(--cream);
-    }
-
-    .dress-code-section p {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-      font-style: italic;
-      color: var(--rose-light);
-      margin-top: 0.6rem;
-    }
-
-    /* footer */
+    /* ── FOOTER ── */
     footer {
-      background: var(--burgundy);
-      text-align: center;
-      padding: 4rem 2rem 3rem;
-      border-top: 1px solid rgba(201,168,76,0.3);
+      text-align: center; padding: 2.5rem 1.5rem;
+      border-top: 1px solid rgba(201,168,76,0.15);
     }
-
-    footer .footer-final {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.8rem;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--gold);
-      display: block;
-      margin-bottom: 0.8rem;
+    footer img {
+      display: block; margin: 0 auto;
     }
-
-    footer h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.6rem, 4vw, 2.6rem);
-      font-weight: 400;
-      font-style: italic;
-      color: var(--cream);
-      margin-bottom: 0.5rem;
-    }
-
-    footer .footer-rule {
-      width: 70px;
-      height: 1px;
-      background: var(--gold);
-      margin: 1.2rem auto;
-      opacity: 0.5;
-    }
-
     footer p {
-      color: var(--rose-light);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.85rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.6rem; font-weight: 300;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); margin-top: 0.5rem;
     }
 
-    /* final image */
-    .final-image {
-      width: 100%;
-      line-height: 0;
+    /* ── BOOKLET LINK ── */
+    .booklet-link-bar {
+      background: rgba(14,6,4,0.04);
+      border-top: 1px solid rgba(201,168,76,0.25);
+      border-bottom: 1px solid rgba(201,168,76,0.25);
+      text-align: center; padding: 1.2rem 1.5rem;
     }
-
-    .final-image img {
-      width: 100%;
-      height: auto;
-      display: block;
+    .booklet-link-bar a {
+      display: inline-block;
+      padding: 0.75rem 2.5rem;
+      background: var(--wine);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem; font-weight: 400;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(201,168,76,0.5);
+      transition: background 0.2s, border-color 0.2s;
     }
+    .booklet-link-bar a:hover { background: #7a2038; border-color: var(--gold); }
 
-    /* ─── MOBILE ─── */
-    @media (max-width: 768px) {
-      nav { display: none; }
-      .hamburger { display: flex; }
-      header { padding: 0 1.2rem; }
-      .parchment { padding: 2.5rem 1.2rem 3rem; }
-      .parchment::before { inset: 8px; }
-      .toc-grid { grid-template-columns: 1fr; }
-      .toc-item { border-right: none !important; }
-      .schedule-row { grid-template-columns: 60px 1fr; }
+    /* ── SECTION FADE IN ── */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: none; }
+
+    /* ── FAQ ── */
+    .faq-list { display: flex; flex-direction: column; gap: 0.5rem; }
+    .faq-item { background: var(--parchment); border-radius: 3px; box-shadow: var(--shadow); overflow: hidden; }
+    .faq-q {
+      width: 100%; text-align: left; background: none; border: none;
+      padding: 1.1rem 1.5rem; cursor: pointer;
+      font-family: 'Cormorant Garamond', serif; font-size: 1.05rem;
+      color: var(--text); display: flex; justify-content: space-between; align-items: center;
+      gap: 1rem;
     }
+    .faq-q:hover { background: rgba(201,168,76,0.10); }
+    .faq-arrow { font-size: 1.3rem; color: var(--gold); flex-shrink: 0; transition: transform 0.25s; line-height: 1; }
+    .faq-item.open .faq-arrow { transform: rotate(45deg); }
+    .faq-a {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 1.5rem;
+    }
+    .faq-item.open .faq-a { max-height: 200px; padding: 0 1.5rem 1.1rem; }
+    .faq-a p { font-size: 0.95rem; color: var(--muted); font-style: italic; line-height: 1.7; }
 
+    /* ── MOBILE TWEAKS ── */
     @media (max-width: 480px) {
-      body { font-size: 16px; }
+      .transport-grid { grid-template-columns: 1fr; }
+      .weekend-grid   { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header>
-  <img src="images/logo.png" alt="Ale &amp; Kris" class="header-logo" />
-  <nav>
-    <ul>
-      <li><a href="#story">Our Story</a></li>
-      <li><a href="#ch1">The Wedding</a></li>
-      <li><a href="#ch2">Travel</a></li>
-      <li><a href="#ch3">Weekend</a></li>
-      <li><a href="#ch4">The Day</a></li>
-      <li><a href="#rsvp">RSVP</a></li>
-      <li><a href="#ch7">Stay</a></li>
-      <li><a href="#faq">FAQ</a></li>
-    </ul>
-  </nav>
-  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
-</header>
-
-<div class="mobile-nav" id="mobileNav">
-  <ul>
-    <li><a href="#story" onclick="toggleMenu()">Our Story</a></li>
-    <li><a href="#ch1" onclick="toggleMenu()">The Wedding</a></li>
-    <li><a href="#ch2" onclick="toggleMenu()">Travel</a></li>
-    <li><a href="#ch3" onclick="toggleMenu()">The Weekend</a></li>
-    <li><a href="#ch4" onclick="toggleMenu()">The Day</a></li>
-    <li><a href="#rsvp" onclick="toggleMenu()">RSVP</a></li>
-    <li><a href="#ch7" onclick="toggleMenu()">Accommodation</a></li>
-    <li><a href="#faq" onclick="toggleMenu()">FAQ</a></li>
-  </ul>
-</div>
-
-<!-- BOOK MODE BANNER -->
-<div style="background:var(--burgundy); text-align:center; padding:0.7rem 1rem; border-bottom:1px solid rgba(201,168,76,0.4);">
-  <a href="book.html" style="font-family:'Cormorant Garamond',serif; font-size:0.8rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold-light); text-decoration:none;">
-    📖 &nbsp;Read as a book — swipe through the pages →
-  </a>
-</div>
-
-<!-- HERO -->
-<div class="hero">
-  <img src="images/hero.jpg" alt="Ale &amp; Kris — 28th August 2026, Castell de Sant Marçal" />
-</div>
-
-<!-- INTRO + TOC -->
-<div id="story">
-  <div class="book-image">
-    <img src="images/book-intro.png" alt="Welcome letter and table of contents" />
-  </div>
-
-  <div class="parchment">
-    <div class="parchment-inner">
-      <span class="gold-divider">❧ ❧ ❧</span>
-
-      <div class="toc-grid">
-        <a href="#ch1" class="toc-item">
-          <span class="toc-chapter-label">Chapter I</span>
-          <span class="toc-chapter-name">The Wedding</span>
-          <span class="toc-chapter-sub">Date &amp; Location</span>
-        </a>
-        <a href="#ch2" class="toc-item">
-          <span class="toc-chapter-label">Chapter II</span>
-          <span class="toc-chapter-name">How to Get There</span>
-          <span class="toc-chapter-sub">Map, Parking &amp; Transport</span>
-        </a>
-        <a href="#ch3" class="toc-item">
-          <span class="toc-chapter-label">Chapter III</span>
-          <span class="toc-chapter-name">The Weekend</span>
-          <span class="toc-chapter-sub">Welcome Drinks &amp; Pool Party</span>
-        </a>
-        <a href="#ch4" class="toc-item">
-          <span class="toc-chapter-label">Chapter IV</span>
-          <span class="toc-chapter-name">The Celebration</span>
-          <span class="toc-chapter-sub">Timeline &amp; Details</span>
-        </a>
-        <a href="#rsvp" class="toc-item">
-          <span class="toc-chapter-label">Chapter V</span>
-          <span class="toc-chapter-name">RSVP</span>
-          <span class="toc-chapter-sub">Confirm your Attendance</span>
-        </a>
-        <a href="#ch6" class="toc-item">
-          <span class="toc-chapter-label">Chapter VI</span>
-          <span class="toc-chapter-name">Table Plan &amp; Menu</span>
-          <span class="toc-chapter-sub">Coming Soon</span>
-        </a>
-        <a href="#ch7" class="toc-item">
-          <span class="toc-chapter-label">Chapter VII</span>
-          <span class="toc-chapter-name">Accommodation &amp; Tips</span>
-          <span class="toc-chapter-sub">Where to Stay &amp; What to Do</span>
-        </a>
-        <a href="#faq" class="toc-item">
-          <span class="toc-chapter-label">Chapter VIII</span>
-          <span class="toc-chapter-name">FAQ</span>
-          <span class="toc-chapter-sub">Everything Else</span>
-        </a>
+  <!-- ── HERO ── -->
+  <div id="hero">
+    <div id="hero-bg"></div>
+    <div id="hero-overlay"></div>
+    <div id="hero-content">
+      <div id="countdown">
+        <div class="cd-unit"><span class="cd-num" id="cd-days">—</span><span class="cd-label">Days</span></div>
+        <span class="cd-sep">·</span>
+        <div class="cd-unit"><span class="cd-num" id="cd-hours">—</span><span class="cd-label">Hours</span></div>
+        <span class="cd-sep">·</span>
+        <div class="cd-unit"><span class="cd-num" id="cd-mins">—</span><span class="cd-label">Minutes</span></div>
+        <span class="cd-sep">·</span>
+        <div class="cd-unit"><span class="cd-num" id="cd-secs">—</span><span class="cd-label">Seconds</span></div>
       </div>
+      <a href="#rsvp-section" class="hero-cta">RSVP</a>
     </div>
+    <div class="scroll-arrow"><svg viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></div>
   </div>
-</div>
 
-<!-- LOVE STORY -->
-<div class="book-image" id="lovestory">
-  <img src="images/book-story.jpg" alt="The Couple's Story" />
-</div>
-
-<div class="parchment">
-  <div class="parchment-inner">
-    <p>Once upon a time, a little girl named Alexandra was born in Lisbon — though she would forever insist she is half Brazilian, despite carrying a surname that is unmistakably German. Perhaps fate was already hinting at the curious mixture of worlds that lay ahead. For six years later, in the German city of Bielefeld — a place most famous for not being famous at all — a boy named Kristoffer entered the world.</p>
-    <p>For many years, their paths did not cross. After spending time in Portugal, Italy, Brazil and New York, Ale eventually built her life beneath the sunny skies of Barcelona, while Kris went all the way to Mexico only to later settle in the far rainier streets of London. One might say they are just as different as the cities they call home. And yet, as everyone knows, opposites have a most curious habit of attracting one another.</p>
-    <p>And so it was that, one summer evening in Ibiza, destiny quietly intervened. They met at a dinner with mutual friends — a dinner Ale was very eager to attend and Kris was not eager to attend at all. As it happens, friends, Covid, Neymar and Anitta all played their own peculiar roles in the chain of unlikely events that brought them to the same table.</p>
-    <p>On the night of the wedding celebration, just after midnight, it will be exactly six years since that evening in Ibiza — August 29th, 2020 — when their story truly began.</p>
-    <p>Six years of a long-distance relationship that was not always easy, yet somehow brought them closer with each passing day. Six years of growing together, learning from one another, and slowly becoming not only partners, but the very best of friends.</p>
-    <p><em>And the rest, dear reader, is the story that continues. ✨</em></p>
+  <!-- ── BOOKLET LINK ── -->
+  <div class="booklet-link-bar">
+    <a href="book-images-v3-page-fold.html">📖 &nbsp; View the full digital booklet →</a>
   </div>
-</div>
 
-<!-- CHAPTER I: THE WEDDING -->
-<div class="chapter-divider" id="ch1">
-  <span class="chapter-num">Chapter I</span>
-  <h2>The Wedding</h2>
-  <div class="gold-rule"></div>
-</div>
-
-<div class="book-image">
-  <img src="images/book-ch1.jpg" alt="Chapter I — The Wedding" />
-</div>
-
-<div class="parchment">
-  <div class="parchment-inner">
-    <div class="info-row">
-      <span class="info-label">Date</span>
-      <div class="info-value">Friday, 28th August 2026</div>
-    </div>
-    <div class="info-row">
-      <span class="info-label">Venue</span>
-      <div class="info-value">Castell de Sant Marçal</div>
-      <div class="info-sub">Cerdanyola del Vallès, Barcelona</div>
-    </div>
-    <div class="info-row">
-      <span class="info-label">Arrival Time</span>
-      <div class="info-value">18:15h</div>
-      <div class="info-sub"><em>Kindly arrive on time, so the celebration may unfold beautifully and without interruption.</em></div>
-    </div>
-  </div>
-</div>
-
-<!-- CHAPTER II: HOW TO GET THERE -->
-<div class="chapter-divider" id="ch2">
-  <span class="chapter-num">Chapter II</span>
-  <h2>How to Get There</h2>
-  <div class="gold-rule"></div>
-</div>
-
-<div class="book-image">
-  <img src="images/book-ch2.jpg" alt="Chapter II — Access &amp; Arrival" />
-</div>
-
-<div class="parchment">
-  <div class="parchment-inner">
-    <div class="info-row">
-      <span class="info-label">Address</span>
-      <div class="info-value">Castell de Sant Marçal</div>
-      <div class="info-sub">110154 Acceso provisional, 41<br>08290 Cerdanyola del Vallès, Barcelona</div>
-    </div>
-    <div class="info-row" style="padding-bottom:0">
-      <a href="https://maps.google.com/?q=Castell+de+Sant+Marcal+Cerdanyola+del+Valles+Barcelona" target="_blank" class="cta-btn" style="margin-top:0.8rem">Open in Google Maps</a>
-    </div>
-
-    <h3>Parking</h3>
-    <p>On-site parking is available at the venue. If you plan to drive, kindly let us know in advance.</p>
-
-    <h3>Getting There</h3>
-    <p>A private bus shall be provided for guests, with a fixed schedule and pick-up point, travelling from Barcelona to the castle and returning thereafter. Kindly inform us if you intend to make use of this service when you RSVP.</p>
-    <p>Alternatively, the castle lies only 30 minutes from Barcelona city centre and may also be reached by Cabify, Uber, or taxi at an approximate cost of €30.</p>
-  </div>
-</div>
-
-<!-- CHAPTER III: THE WEEKEND -->
-<div class="chapter-divider" id="ch3">
-  <span class="chapter-num">Chapter III</span>
-  <h2>The Weekend</h2>
-  <div class="gold-rule"></div>
-</div>
-
-<div class="book-image">
-  <img src="images/book-ch3.jpg" alt="Chapter III — The Weekend" />
-</div>
-
-<div class="parchment">
-  <div class="parchment-inner">
-    <h3>Welcome Drinks</h3>
-    <span class="label">Thursday, 27th August 2026</span>
-    <p>An intimate gathering the evening before the wedding to greet each other and begin the celebration together.</p>
-    <p><em>Details coming soon.</em></p>
-
-    <span class="gold-divider">❧</span>
-
-    <h3>Pool Party</h3>
-    <span class="label">Saturday, 29th August 2026</span>
-    <p>A post-wedding afternoon to relax by the pool and enjoy the Barcelona sun together.</p>
-    <p><em>More information to follow.</em></p>
-  </div>
-</div>
-
-<!-- CHAPTER IV: THE DAY -->
-<div class="chapter-divider" id="ch4">
-  <span class="chapter-num">Chapter IV</span>
-  <h2>The Celebration</h2>
-  <div class="gold-rule"></div>
-</div>
-
-<div class="book-image">
-  <img src="images/book-ch4.jpg" alt="Chapter IV — The Day" />
-</div>
-
-<div class="parchment">
-  <div class="parchment-inner">
-    <p style="font-style:italic; margin-bottom:2rem">Friday, 28th August 2026 — Castell de Sant Marçal</p>
-
-    <div class="schedule-row">
-      <div class="sched-time">18:15h</div>
-      <div>
-        <span class="sched-title">Welcome Guests</span>
-        <span class="sched-desc">Arrive at the castle and begin the evening</span>
-      </div>
-    </div>
-    <div class="schedule-row">
-      <div class="sched-time">—</div>
-      <div>
-        <span class="sched-title">Ceremony</span>
-        <span class="sched-desc">Late afternoon in the gardens</span>
-      </div>
-    </div>
-    <div class="schedule-row">
-      <div class="sched-time">—</div>
-      <div>
-        <span class="sched-title">Cocktail Hour</span>
-        <span class="sched-desc">Signature drinks, appetizers and live music</span>
-      </div>
-    </div>
-    <div class="schedule-row">
-      <div class="sched-time">—</div>
-      <div>
-        <span class="sched-title">Dinner</span>
-        <span class="sched-desc">A seated celebration under the stars</span>
-      </div>
-    </div>
-    <div class="schedule-row">
-      <div class="sched-time">—</div>
-      <div>
-        <span class="sched-title">Party</span>
-        <span class="sched-desc">Dancing until 3:30 AM &amp; late night snacks</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- CHAPTER V: RSVP -->
-<div class="chapter-divider" id="rsvp">
-  <span class="chapter-num">Chapter V</span>
-  <h2>RSVP</h2>
-  <div class="gold-rule"></div>
-</div>
-
-<div class="book-image">
-  <img src="images/book-ch5.jpg" alt="Chapter V — RSVP" />
-</div>
-
-<div class="parchment">
-  <div class="parchment-inner">
-    <p>Kindly confirm your attendance before the end of May 2026.</p>
-    <p>Please let us know whether you will be joining us for the Wedding Day, Welcome Drinks, and Pool Party.</p>
-    <a href="rsvp.html" class="cta-btn">Confirm your Attendance</a>
-  </div>
-</div>
-
-<!-- CHAPTER VI: TABLE PLAN (LOCKED) -->
-<div class="chapter-divider" id="ch6">
-  <span class="chapter-num">Chapter VI</span>
-  <h2>Table Plan &amp; Menu</h2>
-  <div class="gold-rule"></div>
-</div>
-
-<div class="parchment">
-  <div class="parchment-inner">
-    <div class="locked-box">
-      <span class="lock-icon">🔒</span>
-      <p style="font-family:'Playfair Display',serif; font-size:1.15rem; color:var(--burgundy); font-style:italic">This chapter shall be unveiled closer to the date.</p>
-      <p style="margin-top:0.8rem; font-size:0.95rem; color:var(--text-light)">Kindly return here to discover where you shall be seated and the delicious banquet prepared for the occasion. This information will be provided exclusively on this website and will not be available in print.</p>
-    </div>
-  </div>
-</div>
-
-<!-- CHAPTER VII: ACCOMMODATION -->
-<div class="chapter-divider" id="ch7">
-  <span class="chapter-num">Chapter VII</span>
-  <h2>Accommodation &amp; Tips</h2>
-  <div class="gold-rule"></div>
-</div>
-
-<div class="parchment">
-  <div class="parchment-inner">
-    <p style="font-style:italic">We do hope you shall permit yourself the pleasure of lingering in this most splendid of cities. Consider our wedding a most agreeable occasion to do so.</p>
-
-    <h3>Establishments of the Finest Distinction</h3>
-
-    <div class="hotel-category">
-      <span class="hotel-cat-label">By the Sea</span>
-      <ul class="hotel-list">
-        <li>W Barcelona</li>
-        <li>Hotel Arts Barcelona</li>
-        <li>Duquesa de Cardona</li>
-        <li>Soho House Barcelona</li>
+  <!-- ── THE DAY ── -->
+  <section class="fade-in">
+    <span class="section-label">28 August 2026</span>
+    <h2 class="section-title">The Day</h2>
+    <div class="section-divider"></div>
+    <div class="card">
+      <ul class="timeline">
+        <li>
+          <span class="tl-time">18:15</span>
+          <div><span class="tl-event">Welcome &amp; Arrival</span><span class="tl-note">Please arrive on time — the ceremony starts promptly</span></div>
+        </li>
+        <li>
+          <span class="tl-time">18:30</span>
+          <div><span class="tl-event">Ceremony</span><span class="tl-note">In the gardens of the Castell</span></div>
+        </li>
+        <li>
+          <span class="tl-time">Evening</span>
+          <div><span class="tl-event">Cocktail Hour</span><span class="tl-note">Signature drinks &amp; live music</span></div>
+        </li>
+        <li>
+          <span class="tl-time">Night</span>
+          <div><span class="tl-event">Dinner Under the Stars</span></div>
+        </li>
+        <li>
+          <span class="tl-time">Late</span>
+          <div><span class="tl-event">Dancing &amp; Party</span><span class="tl-note">Until 3:30 AM</span></div>
+        </li>
       </ul>
     </div>
+  </section>
 
-    <div class="hotel-category">
-      <span class="hotel-cat-label">In the Heart of the City</span>
-      <ul class="hotel-list">
-        <li>Condes de Barcelona</li>
-        <li>Hotel Palace Barcelona</li>
-        <li>OD Barcelona</li>
-        <li>Mandarin Oriental Barcelona</li>
-        <li>Hotel Monumental</li>
-        <li>Hotel Majestic</li>
-      </ul>
+  <!-- ── GETTING THERE ── -->
+  <section class="fade-in">
+    <span class="section-label">Access &amp; Arrival</span>
+    <h2 class="section-title">Getting There</h2>
+    <div class="section-divider"></div>
+
+    <div class="transport-grid">
+      <div class="transport-card">
+        <span class="transport-icon">🚌</span>
+        <p class="transport-title">Private Bus</p>
+        <p class="transport-detail">From Barcelona city centre — details &amp; pickup point confirmed on RSVP</p>
+      </div>
+      <div class="transport-card">
+        <span class="transport-icon">🚗</span>
+        <p class="transport-title">Taxi / Cabify</p>
+        <p class="transport-detail">~€30, ~30 min from central Barcelona. Parking on-site.</p>
+      </div>
     </div>
 
-    <p style="font-style:italic; font-size:0.95rem; color:var(--text-light); margin-top:1rem">A word of gentle counsel: the quarters of Raval and Las Ramblas, whilst not without a certain character, are perhaps not the most restful of addresses. One is most warmly advised to seek one's lodgings elsewhere.</p>
-
-    <h3>On Getting About</h3>
-    <p>The city rewards those who venture on foot — much may be discovered at a most agreeable pace. For greater distances, Cabify or Uber shall prove most reliable. The castle itself lies but thirty minutes from the city centre.</p>
-
-    <h3>Diversions Most Heartily Recommended</h3>
-    <ul style="list-style:none; text-align:left; margin-top:0.5rem">
-      <li style="padding:0.6rem 0; border-bottom:1px solid rgba(201,168,76,0.2)">✦ &nbsp;A promenade of the most leisurely sort through the Gothic Quarter and El Born</li>
-      <li style="padding:0.6rem 0; border-bottom:1px solid rgba(201,168,76,0.2)">✦ &nbsp;An audience with the Sagrada Família and Park Güell <em style="font-size:0.9rem; color:var(--text-light)">(prior reservation is most strongly advised)</em></li>
-      <li style="padding:0.6rem 0; border-bottom:1px solid rgba(201,168,76,0.2)">✦ &nbsp;A morning of great pleasure at the Boqueria market</li>
-      <li style="padding:0.6rem 0; border-bottom:1px solid rgba(201,168,76,0.2)">✦ &nbsp;A long and thoroughly unhurried luncheon in Barceloneta</li>
-      <li style="padding:0.6rem 0">✦ &nbsp;An idle and most delightful Sunday in the Gràcia neighbourhood</li>
-    </ul>
-  </div>
-</div>
-
-<!-- GIFT -->
-<div class="parchment" style="background:var(--parchment-dark)">
-  <div class="parchment-inner">
-    <span class="label">With Love</span>
-    <h3 style="margin-top:0.5rem">A Note on Gifts</h3>
-    <span class="gold-divider">— ✦ —</span>
-    <p>Your presence at our celebration is, without question, the greatest gift one could bestow upon us.</p>
-    <p>Should you wish, however, to honour us with a token of your affection, a contribution towards our honeymoon — as we embark upon this most joyful of new chapters — would be received with the deepest gratitude.</p>
-    <div class="iban">ES57 0081 0025 2100 0416 4925</div>
-    <p style="margin-top:1.2rem; font-size:0.92rem; font-style:italic; color:var(--text-light)">We thank you most sincerely for celebrating with us, and for the honour of your place in our story.</p>
-  </div>
-</div>
-
-<!-- DRESS CODE -->
-<div class="dress-code-section">
-  <div class="ornament">✦ ✦ ✦</div>
-  <h2>Chic Wedding Attire</h2>
-  <p>Timeless elegance for a castle soirée.</p>
-</div>
-
-<!-- CHAPTER VIII: FAQ -->
-<div class="chapter-divider" id="faq">
-  <span class="chapter-num">Chapter VIII</span>
-  <h2>Frequently Asked Questions</h2>
-  <div class="gold-rule"></div>
-</div>
-
-<div class="parchment">
-  <div class="parchment-inner">
-    <div class="faq-item">
-      <p class="faq-q">Where is the wedding taking place?</p>
-      <p class="faq-a">Castell de Sant Marçal, 110154 Acceso provisional, 41, 08290 Cerdanyola del Vallès, Barcelona.</p>
+    <div class="address-card">
+      <span class="pin">📍</span>
+      <div>
+        <p>Castell de Sant Marçal<br>Cerdanyola del Vallès, Barcelona</p>
+        <a href="https://maps.google.com/?q=Castell+de+Sant+Marcal+Cerdanyola" target="_blank" rel="noopener">Open in Maps →</a>
+      </div>
     </div>
-    <div class="faq-item">
-      <p class="faq-q">Are children allowed?</p>
-      <p class="faq-a">Our wedding will be an adults-only celebration. We would love for you to fully relax, celebrate, and enjoy the day without any responsibilities.</p>
-    </div>
-    <div class="faq-item">
-      <p class="faq-q">What is the best way to get to the venue?</p>
-      <p class="faq-a">We will be providing a private shuttle bus from Barcelona city centre. Collection points and exact timings will be confirmed closer to the date — please keep an eye on this website for updates. Alternatively, Cabify, Uber or taxi takes approximately 30 minutes at around €30.</p>
-    </div>
-    <div class="faq-item">
-      <p class="faq-q">Is parking available at the venue?</p>
-      <p class="faq-a">Yes, on-site parking is available. If you are planning to drive, please let us know in advance.</p>
-    </div>
-    <div class="faq-item">
-      <p class="faq-q">Can I take photos during the ceremony?</p>
-      <p class="faq-a">Please refrain from taking photos during the ceremony vows — we have entrusted a professional photographer and videographer to capture every moment, and we would love for you to be fully present with us. Outside of the vows, feel free to take all the photos you wish!</p>
-    </div>
-    <div class="faq-item">
-      <p class="faq-q">What if I cannot attend?</p>
-      <p class="faq-a">If you are unable to join us, please RSVP "no" as soon as possible. While we would love to celebrate with you, we completely understand that circumstances can change.</p>
-    </div>
-    <div class="faq-item">
-      <p class="faq-q">What about dietary restrictions?</p>
-      <p class="faq-a">Please let us know when you RSVP. We will ensure the catering team is informed and happy to accommodate you.</p>
-    </div>
-    <div class="faq-item">
-      <p class="faq-q">What about wedding gifts?</p>
-      <p class="faq-a">Your presence is truly the greatest gift. Should you wish to contribute, details for a honeymoon contribution are in the section above. Thank you so much.</p>
-    </div>
-  </div>
-</div>
+  </section>
 
-<!-- FOOTER IMAGE + FOOTER -->
-<div class="final-image">
-  <img src="images/book-intro.png" alt="" style="opacity:0.15; filter:grayscale(30%)" />
-</div>
+  <!-- ── THE WEEKEND ── -->
+  <section class="fade-in">
+    <span class="section-label">The Full Celebration</span>
+    <h2 class="section-title">The Weekend</h2>
+    <div class="section-divider"></div>
+    <div class="weekend-grid">
+      <div class="weekend-card">
+        <p class="weekend-day">Thursday · 27 Aug</p>
+        <h3 class="weekend-title">Welcome Drinks</h3>
+        <p class="weekend-desc">An intimate pre-wedding gathering for those arriving early. Details to follow.</p>
+      </div>
+      <div class="weekend-card" style="border-top-color:#5B1A2A;">
+        <p class="weekend-day" style="color:#5B1A2A;">Friday · 28 Aug</p>
+        <h3 class="weekend-title">The Wedding</h3>
+        <p class="weekend-desc">The big day. Ceremony at 18:30, followed by dinner &amp; dancing until 3:30 AM.</p>
+      </div>
+      <div class="weekend-card">
+        <p class="weekend-day">Saturday · 29 Aug</p>
+        <h3 class="weekend-title">Pool Party</h3>
+        <p class="weekend-desc">A relaxed afternoon by the pool to celebrate the day after. More info soon.</p>
+      </div>
+    </div>
+  </section>
 
-<footer>
-  <span class="footer-final">We truly hope you will join us</span>
-  <h2>Ale &amp; Kris</h2>
-  <div class="footer-rule"></div>
-  <p>28 · 08 · 2026 &nbsp;·&nbsp; Castell de Sant Marçal, Barcelona</p>
-</footer>
+  <!-- ── SEATING & MENU ── -->
+  <section class="fade-in">
+    <span class="section-label">Dinner</span>
+    <h2 class="section-title">Seating &amp; Menu</h2>
+    <div class="section-divider"></div>
+    <div class="card" style="text-align:center;">
+      <p style="font-style:italic;font-size:1rem;color:var(--muted);line-height:1.8;">Your assigned table and full dinner menu will be available here once confirmed.</p>
+    </div>
+  </section>
 
-<script>
-  function toggleMenu() {
-    document.getElementById('mobileNav').classList.toggle('open');
-  }
-  document.addEventListener('click', function(e) {
-    const nav = document.getElementById('mobileNav');
-    const btn = document.querySelector('.hamburger');
-    if (nav.classList.contains('open') && !nav.contains(e.target) && !btn.contains(e.target)) {
-      nav.classList.remove('open');
+  <!-- ── WEDDING GIFT ── -->
+  <section class="fade-in">
+    <span class="section-label">Wedding Gift</span>
+    <h2 class="section-title">A Gift from the Heart</h2>
+    <div class="section-divider"></div>
+    <div class="card" style="text-align:center;">
+      <p style="font-size:1.05rem;line-height:1.9;color:var(--text);margin-bottom:1.5rem;">Your presence at our wedding is truly the greatest gift we could ask for.<br><br>However, if you wish to honour us with a gift, a contribution towards our honeymoon would mean the world to us as we begin this new chapter together.</p>
+      <div style="background:rgba(14,6,4,0.05);border-radius:3px;padding:1.2rem 1.5rem;display:inline-block;border:1px solid rgba(201,168,76,0.35);">
+        <p style="font-family:'Montserrat',sans-serif;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem;">Bank Transfer</p>
+        <p style="font-family:'Montserrat',sans-serif;font-size:0.95rem;font-weight:500;color:var(--text);letter-spacing:0.05em;">ES57 0081 0025 2100 0416 4925</p>
+      </div>
+      <p style="margin-top:1.2rem;font-style:italic;font-size:0.9rem;color:var(--muted);">Thank you for celebrating with us and for being part of our story.</p>
+    </div>
+  </section>
+
+  <!-- ── OUR STORY ── -->
+  <section class="fade-in">
+    <span class="section-label">Our Story</span>
+    <h2 class="section-title">Once Upon a Time</h2>
+    <div class="section-divider"></div>
+    <div class="card" style="font-style:italic;font-size:1rem;line-height:1.9;color:var(--text);padding:2.2rem 2rem;">
+      <p style="margin-bottom:1.2rem;">Once upon a time, a little girl named Alexandra was born in Lisbon — though she would forever insist she is half Brazilian, despite carrying a surname that is unmistakably German. Perhaps fate was already hinting at the curious mixture of worlds that lay ahead. For six years later, in the German city of Bielefeld — a place most famous for not being famous at all — a boy named Kristoffer entered the world.</p>
+      <p style="margin-bottom:1.2rem;">For many years, their paths did not cross. After spending time in Portugal, Italy, Brazil and New York, Ale eventually built her life beneath the sunny skies of Barcelona, while Kris went all the way to Mexico only to later settle in the far rainier streets of London. One might say they are just as different as the cities they call home. And yet, as everyone knows, opposites have a most curious habit of attracting one another.</p>
+      <p style="margin-bottom:1.2rem;">And so it was that, one summer evening in Ibiza, destiny quietly intervened. They met at a dinner with mutual friends — a dinner Ale was very eager to attend and Kris was not eager to attend at all. As it happens, friends, Covid, Neymar and Anitta all played their own peculiar roles in the chain of unlikely events that brought them to the same table.</p>
+      <p style="margin-bottom:1.2rem;">On the night of the wedding celebration, just after midnight, it will be exactly six years since that evening in Ibiza — August 29th, 2020 — when their story truly began.</p>
+      <p style="margin-bottom:1.2rem;">Six years of a long-distance relationship that was not always easy, yet somehow brought them closer with each passing day. Six years of growing together, learning from one another, and slowly becoming not only partners, but the very best of friends.</p>
+      <p style="margin-bottom:1.2rem;">And the rest, dear reader, is the story that continues.</p>
+      <div style="text-align:center;margin-top:1.5rem;"><img src="images/logo2.png" alt="Ale &amp; Kris" style="width:160px;height:auto;opacity:0.9;" /></div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ── -->
+  <section class="fade-in">
+    <span class="section-label">Practical Details</span>
+    <h2 class="section-title">FAQs</h2>
+    <div class="section-divider"></div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q">Where is the wedding? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Castell de Sant Marçal, Cerdanyola del Vallès, Barcelona.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Can I bring a companion? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Each invitation is addressed to the specific guest(s) invited. We kindly ask that only those named on the invitation attend.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Are children allowed? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>This will be an adults-only celebration. As much as we adore your little ones, we would love for you to fully relax and enjoy the day without any responsibilities.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">How do I get there? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>A private shuttle bus will be organised from Barcelona city centre. Collection points and timings will be confirmed closer to the date — keep an eye on the website. Alternatively, Cabify, Uber or a taxi takes approximately 30 minutes and costs around €30.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Is parking available? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Yes, on-site parking is available. If you are planning to drive, please let us know when you RSVP.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">What is the dress code? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Chic wedding attire — timeless elegance for a castle soirée. All colours and prints are welcome.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Can I take photos? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Please refrain from taking photos during the ceremony vows — we have a professional photographer and videographer capturing every moment, and we'd love for you to be fully present with us. Outside of the vows, feel free to take as many photos as you wish!</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">What if I can't attend? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Please RSVP "no" as soon as possible. While we would love to celebrate with you, we completely understand that circumstances can change.</p></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── RSVP ── -->
+  <section id="rsvp-section" class="fade-in">
+    <div class="rsvp-block">
+      <span class="section-label" style="color:rgba(201,168,76,0.7)">Kindly confirm by</span>
+      <h2 class="section-title">RSVP</h2>
+      <p>Please let us know if you'll be joining us —<br>and whether you'd like a seat on the bus.</p>
+      <a href="rsvp.html" class="rsvp-btn">Confirm Attendance</a>
+      <p class="rsvp-deadline">Deadline: end of May 2026</p>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <img src="images/logo2.png" alt="A &amp; K" style="width:140px;height:auto;opacity:0.85;margin-bottom:0.8rem;" />
+    <p>28 · August · 2026 · Castell de Sant Marçal</p>
+  </footer>
+
+  <script>
+    // ── COUNTDOWN ──
+    const wedding = new Date('2026-08-28T18:15:00+02:00');
+    function tick() {
+      const now = new Date();
+      const diff = wedding - now;
+      if (diff <= 0) {
+        document.getElementById('countdown').innerHTML = '<span style="font-family:Great Vibes,cursive;font-size:1.8rem;color:#fff">Today is the day! 🎉</span>';
+        return;
+      }
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      document.getElementById('cd-days').textContent  = d;
+      document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+      document.getElementById('cd-mins').textContent  = String(m).padStart(2,'0');
+      document.getElementById('cd-secs').textContent  = String(s).padStart(2,'0');
     }
-  });
-</script>
+    tick(); setInterval(tick, 1000);
+
+    // ── FAQ ACCORDION ──
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+
+    // ── FADE IN ON SCROLL ──
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+  </script>
 </body>
 </html>
