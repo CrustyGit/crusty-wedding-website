@@ -4,6 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RSVP — Ale &amp; Kris · 28th August 2026</title>
+  <meta name="description" content="RSVP for the wedding of Ale &amp; Kris — 28th August 2026, Castell de Sant Marçal, Barcelona" />
+  <meta property="og:title" content="RSVP — Ale &amp; Kris Wedding" />
+  <meta property="og:description" content="Confirm your attendance for the wedding of Alexandra &amp; Kristoffer — 28th August 2026, Barcelona" />
+  <meta property="og:image" content="https://aleandkris.com/images/hero.jpg" />
+  <meta property="og:url" content="https://aleandkris.com/rsvp" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/png" href="images/seal-logo.png" />
+  <link rel="apple-touch-icon" href="images/seal-logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
@@ -167,6 +175,16 @@
       margin-bottom: 0.5rem;
     }
 
+    .name-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    @media (max-width: 500px) {
+      .name-row { grid-template-columns: 1fr; gap: 0; }
+    }
+
     input[type="text"],
     input[type="email"],
     textarea {
@@ -184,6 +202,7 @@
     }
 
     input[type="text"]:focus,
+    input[type="email"]:focus,
     textarea:focus {
       border-color: var(--burgundy);
     }
@@ -371,12 +390,22 @@
 
   <form id="rsvpForm" onsubmit="handleSubmit(event)">
 
-    <!-- GUEST NAMES -->
+    <!-- GUEST DETAILS -->
     <div class="form-section">
       <span class="form-section-title">Your Details</span>
+      <div class="name-row">
+        <div class="field">
+          <label for="firstName">First Name</label>
+          <input type="text" id="firstName" name="firstName" placeholder="First name" required />
+        </div>
+        <div class="field">
+          <label for="lastName">Last Name</label>
+          <input type="text" id="lastName" name="lastName" placeholder="Last name" required />
+        </div>
+      </div>
       <div class="field">
-        <label for="names">Guest Name(s)</label>
-        <input type="text" id="names" name="names" placeholder="Please write the names of all attendees in your group" required />
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="your@email.com" required />
       </div>
     </div>
 
@@ -513,13 +542,71 @@
 </footer>
 
 <script>
-  function handleSubmit(e) {
+  const API_URL = 'https://rsvp.aleandkris.com/rsvp';
+
+  async function handleSubmit(e) {
     e.preventDefault();
     const form = document.getElementById('rsvpForm');
+    const btn = form.querySelector('.submit-btn');
     const thankYou = document.getElementById('thankYou');
-    form.style.display = 'none';
-    thankYou.classList.add('visible');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const errorMsg = document.getElementById('errorMsg');
+
+    // Hide any previous error
+    if (errorMsg) errorMsg.style.display = 'none';
+
+    // Disable button while submitting
+    btn.disabled = true;
+    btn.textContent = 'SENDING…';
+
+    const firstName = form.firstName.value.trim();
+    const lastName = form.lastName.value.trim();
+    const data = {
+      guest_names: `${firstName} ${lastName}`,
+      email: form.email.value.trim(),
+      wedding: form.wedding.value,
+      drinks: (form.drinks && form.drinks.value) || '',
+      pool: (form.pool && form.pool.value) || '',
+      transport: (form.transport && form.transport.value) || '',
+      dietary: form.dietary.value.trim(),
+      song: form.song.value.trim(),
+      comments: form.comments.value.trim(),
+    };
+
+    try {
+      const resp = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      const result = await resp.json();
+
+      if (resp.ok && result.success) {
+        form.style.display = 'none';
+        thankYou.classList.add('visible');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        showError(result.error || 'Something went wrong. Please try again.');
+        btn.disabled = false;
+        btn.textContent = 'SEND RSVP';
+      }
+    } catch (err) {
+      showError('Could not reach the server. Please check your connection and try again.');
+      btn.disabled = false;
+      btn.textContent = 'SEND RSVP';
+    }
+  }
+
+  function showError(msg) {
+    let el = document.getElementById('errorMsg');
+    if (!el) {
+      el = document.createElement('p');
+      el.id = 'errorMsg';
+      el.style.cssText = 'color:#6B2737;text-align:center;font-style:italic;margin-top:1rem;';
+      document.querySelector('.submit-btn').insertAdjacentElement('afterend', el);
+    }
+    el.textContent = msg;
+    el.style.display = 'block';
   }
 </script>
 </body>
