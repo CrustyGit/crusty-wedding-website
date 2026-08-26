@@ -198,6 +198,11 @@
       font-size: 0.9rem; color: var(--muted);
       font-style: italic; line-height: 1.4;
     }
+    .transport-return {
+      margin-top: 0.45rem;
+      padding-top: 0.45rem;
+      border-top: 1px solid rgba(201,168,76,0.25);
+    }
     .address-card {
       background: var(--parchment);
       border-radius: 3px;
@@ -313,6 +318,66 @@
     .faq-item.open .faq-a { max-height: 200px; padding: 0 1.5rem 1.1rem; }
     .faq-a p { font-size: 0.95rem; color: var(--muted); font-style: italic; line-height: 1.7; }
 
+    /* ── SEATING & MENU ── */
+    .dinner-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .dinner-item {
+      background: var(--parchment); border: none; border-radius: 3px;
+      box-shadow: var(--shadow); padding: 0.9rem 0.9rem 1rem;
+      display: flex; flex-direction: column; gap: 0.75rem;
+      width: 100%; cursor: zoom-in; font: inherit; text-align: center;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .dinner-item:hover { transform: translateY(-3px); box-shadow: 0 8px 36px rgba(14,6,4,0.22); }
+    .dinner-thumb {
+      aspect-ratio: 1 / 1; width: 100%;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--white); border-radius: 2px; overflow: hidden;
+      border: 1px solid rgba(201,168,76,0.30);
+    }
+    .dinner-thumb img {
+      display: block; max-width: 100%; max-height: 100%;
+      width: auto; height: auto;
+    }
+    .dinner-cap {
+      font-family: 'Montserrat', sans-serif; font-size: 0.6rem;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+    }
+    .dinner-hint {
+      font-family: 'Montserrat', sans-serif; font-size: 0.55rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold); margin-top: -0.45rem;
+    }
+
+    /* ── LIGHTBOX ── */
+    #lightbox { position: fixed; inset: 0; z-index: 999; background: rgba(14,6,4,0.985); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: none; }
+    #lightbox.open { display: flex; flex-direction: column; }
+    .lb-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.9rem 1.1rem; flex-shrink: 0;
+    }
+    .lb-title {
+      font-family: 'Montserrat', sans-serif; font-size: 0.6rem;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold);
+    }
+    .lb-close {
+      background: none; border: none; color: var(--cream);
+      font-size: 1.9rem; line-height: 1; cursor: pointer; padding: 0 0.3rem;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .lb-stage {
+      flex: 1; min-height: 0; overflow: auto; -webkit-overflow-scrolling: touch;
+      display: flex; align-items: center; justify-content: center; padding: 0 0.6rem 0.6rem;
+    }
+    .lb-stage img { max-width: 100%; max-height: 100%; object-fit: contain; cursor: zoom-in; }
+    .lb-stage.zoomed { align-items: flex-start; justify-content: flex-start; }
+    .lb-stage.zoomed img { max-width: none; max-height: none; width: 1400px; cursor: zoom-out; }
+    .lb-foot {
+      flex-shrink: 0; text-align: center; padding: 0.5rem 1rem 1.1rem;
+      font-family: 'Montserrat', sans-serif; font-size: 0.55rem;
+      letter-spacing: 0.14em; text-transform: uppercase; color: rgba(250,246,239,0.55);
+    }
+
     /* ── MOBILE TWEAKS ── */
     @media (max-width: 480px) {
       .transport-grid { grid-template-columns: 1fr; }
@@ -395,6 +460,7 @@
         <span class="transport-icon">🚌</span>
         <p class="transport-title">Private Bus</p>
         <p class="transport-detail">Departure 17:30 from Carrer del Dos de Maig, 328, Barcelona</p>
+        <p class="transport-detail transport-return">Return buses leave the castle at 00:30 and 03:30</p>
         <a class="weekend-map" href="https://maps.google.com/?q=Carrer+del+Dos+de+Maig+328+Barcelona" target="_blank" rel="noopener">📍 Open in Maps →</a>
       </div>
       <div class="transport-card">
@@ -448,8 +514,17 @@
     <span class="section-label">Dinner</span>
     <h2 class="section-title">Seating &amp; Menu</h2>
     <div class="section-divider"></div>
-    <div class="card" style="text-align:center;">
-      <p style="font-style:italic;font-size:1rem;color:var(--muted);line-height:1.8;">Your assigned table and full dinner menu will be available here once confirmed.</p>
+    <div class="dinner-grid">
+      <button type="button" class="dinner-item" data-full="images/seating-plan.jpg" data-title="Seating Plan">
+        <span class="dinner-thumb"><img src="images/seating-plan-thumb.jpg" alt="Seating plan — eight tables named after the places in our story" loading="lazy" width="760" height="507" /></span>
+        <span class="dinner-cap">Seating Plan</span>
+        <span class="dinner-hint">Tap to enlarge</span>
+      </button>
+      <button type="button" class="dinner-item" data-full="images/menu.jpg" data-title="Dinner Menu">
+        <span class="dinner-thumb"><img src="images/menu-thumb.jpg" alt="Dinner menu — starters, main course and desserts" loading="lazy" width="620" height="880" /></span>
+        <span class="dinner-cap">Dinner Menu</span>
+        <span class="dinner-hint">Tap to enlarge</span>
+      </button>
     </div>
   </section>
 
@@ -545,6 +620,16 @@
     <p>28 · August · 2026 · Castell de Sant Marçal</p>
   </footer>
 
+  <!-- ── LIGHTBOX ── -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged image">
+    <div class="lb-bar">
+      <span class="lb-title" id="lb-title"></span>
+      <button type="button" class="lb-close" id="lb-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="lb-stage" id="lb-stage"><img id="lb-img" src="" alt="" /></div>
+    <p class="lb-foot">Tap the image to zoom · tap outside to close</p>
+  </div>
+
   <script>
     // ── COUNTDOWN ──
     const wedding = new Date('2026-08-28T18:15:00+02:00');
@@ -581,6 +666,45 @@
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
     }, { threshold: 0.12 });
     document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+    // ── LIGHTBOX (seating plan / menu) ──
+    const lb      = document.getElementById('lightbox');
+    const lbImg   = document.getElementById('lb-img');
+    const lbTitle = document.getElementById('lb-title');
+    const lbStage = document.getElementById('lb-stage');
+    let lastFocus = null;
+
+    function openLb(src, title, trigger) {
+      lastFocus = trigger || null;
+      lbImg.src = src;
+      lbImg.alt = title;
+      lbTitle.textContent = title;
+      lbStage.classList.remove('zoomed');
+      lbStage.scrollTop = 0; lbStage.scrollLeft = 0;
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('lb-close').focus();
+    }
+    function closeLb() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+      lbImg.src = '';
+      if (lastFocus) lastFocus.focus();
+    }
+
+    document.querySelectorAll('.dinner-item').forEach(btn => {
+      btn.addEventListener('click', () => openLb(btn.dataset.full, btn.dataset.title, btn));
+    });
+    document.getElementById('lb-close').addEventListener('click', closeLb);
+    lb.addEventListener('click', e => { if (e.target === lb || e.target === lbStage) closeLb(); });
+    lbImg.addEventListener('click', e => {
+      e.stopPropagation();
+      lbStage.classList.toggle('zoomed');
+      lbStage.scrollTop = 0; lbStage.scrollLeft = 0;
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && lb.classList.contains('open')) closeLb();
+    });
   </script>
 </body>
 </html>
