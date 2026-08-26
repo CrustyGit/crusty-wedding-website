@@ -3,6 +3,8 @@
 Each new page mounts its content as a card on a copy of the back-cover plate
 (images-new/23.jpg), so the paper, gold rule and florals are Ana's own.
 """
+import os
+
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 W, H  = 2400, 1350
@@ -18,8 +20,15 @@ def font(sz, face=REG):
     return ImageFont.truetype(FB, sz, index=face)
 
 
+# The repo copy of the plate is now a 3000px re-encode; the untouched 6000px
+# export lives outside git. Prefer it when present, fall back to the repo.
+PLATE_ORIGINAL = os.path.expanduser('~/crusty-backups/wedding-booklet-originals-6000px/23.jpg')
+PLATE_REPO     = 'images-new/23.jpg'
+
+
 def base():
-    return Image.open('images-new/23.jpg').convert('RGB').resize((W, H), Image.LANCZOS)
+    plate = PLATE_ORIGINAL if os.path.exists(PLATE_ORIGINAL) else PLATE_REPO
+    return Image.open(plate).convert('RGB').resize((W, H), Image.LANCZOS)
 
 
 def tracked(d, xy, text, f, fill, track=0, anchor='mm'):
@@ -72,7 +81,7 @@ def rule(d, cx, y, half=95):
 def page_seating():
     pg = base(); d = ImageDraw.Draw(pg)
     x0, y0, tw, th = art_card(pg, Image.open('images/seating-plan.jpg'), w_frac=0.545, cy=0.565)
-    tracked(d, (W * 0.5, y0 - 132), 'CHAPTER VI', font(36, SEMI), WINE, 12)
+    tracked(d, (W * 0.5, y0 - 132), 'CHAPTER VI:', font(36, SEMI), WINE, 12)
     tracked(d, (W * 0.5, y0 - 74), 'THE SEATING PLAN', font(56, SEMI), WINE, 8)
     rule(d, W * 0.5, y0 - 34, 110)
     pg.save('images-new/24-seating.jpg', 'JPEG', quality=88, optimize=True, progressive=True)
@@ -83,7 +92,7 @@ def page_menu():
     pg = base(); d = ImageDraw.Draw(pg)
     art_card(pg, Image.open('images/menu.jpg'), h_frac=0.70, cx=0.655, cy=0.50)
     cx = W * 0.30
-    tracked(d, (cx, H * 0.355), 'CHAPTER VI', font(34, SEMI), WINE, 12)
+    tracked(d, (cx, H * 0.355), 'CHAPTER VI:', font(34, SEMI), WINE, 12)
     tracked(d, (cx, H * 0.412), 'THE MENU', font(58, SEMI), WINE, 8)
     rule(d, cx, H * 0.455, 95)
     for i, line in enumerate(['The banquet prepared for the evening,', 'served at your table beneath the stars.']):
@@ -108,26 +117,32 @@ def page_details():
     pg = base(); d = ImageDraw.Draw(pg)
     x0, y0, tw, th = paper_card(pg, 0.665, 0.745, cy=0.505)
     cx = x0 + tw / 2
-    tracked(d, (cx, y0 + 76), 'THE WEEKEND', font(52, SEMI), WINE, 9)
-    rule(d, cx, y0 + 118, 105)
-    d.text((cx, y0 + 158), 'everything now confirmed', font=font(29, ITAL), fill=(126, 96, 82), anchor='mm')
+    tracked(d, (cx, y0 + 62), 'CHAPTER III:', font(32, SEMI), WINE, 11)
+    tracked(d, (cx, y0 + 114), 'THE WEEKEND', font(52, SEMI), WINE, 9)
+    rule(d, cx, y0 + 154, 105)
+    d.text((cx, y0 + 192), 'everything now confirmed', font=font(29, ITAL), fill=(126, 96, 82), anchor='mm')
     colx = [x0 + tw * 0.27, x0 + tw * 0.73]
-    rowy = [y0 + 245, y0 + 450]
+    rowy = [y0 + 268, y0 + 470]
     for i, (day, title, lines) in enumerate(ENTRIES):
         px, py = colx[i % 2], rowy[i // 2]
         tracked(d, (px, py), day, font(24, SEMI), GOLD, 5)
         d.text((px, py + 48), title, font=font(44, REG), fill=WINE, anchor='mm')
         for j, ln in enumerate(lines):
             d.text((px, py + 100 + j * 42), ln, font=font(29, REG), fill=INK, anchor='mm')
-    rule(d, cx, y0 + 648, 70)
-    tracked(d, (cx, y0 + 700), 'DRESS CODE', font(26, SEMI), GOLD, 6)
-    d.text((cx, y0 + 754), 'Chic wedding attire \u2014 not Bridgerton.', font=font(38, REG), fill=WINE, anchor='mm')
+    rule(d, cx, y0 + 658, 70)
+    tracked(d, (cx, y0 + 710), 'DRESS CODE', font(26, SEMI), GOLD, 6)
+    d.text((cx, y0 + 764), 'Chic wedding attire \u2014 not Bridgerton.', font=font(38, REG), fill=WINE, anchor='mm')
     for j, ln in enumerate(['Ladies, please do not wear white and avoid black.',
                             'Gentlemen, black tie is not required.']):
-        d.text((cx, y0 + 806 + j * 42), ln, font=font(29, REG), fill=INK, anchor='mm')
+        d.text((cx, y0 + 816 + j * 42), ln, font=font(29, REG), fill=INK, anchor='mm')
     pg.save('images-new/26-details.jpg', 'JPEG', quality=88, optimize=True, progressive=True)
 
 
+PAGES = {'seating': page_seating, 'menu': page_menu, 'details': page_details}
+
 if __name__ == '__main__':
-    page_seating(); page_menu(); page_details()
-    print('built')
+    import sys
+    want = sys.argv[1:] or list(PAGES)
+    for name in want:
+        PAGES[name]()
+        print('built', name)
